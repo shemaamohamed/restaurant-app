@@ -1,0 +1,25 @@
+.content-f{
+    width:95%;
+    margin: auto;
+    font-size: 1.04em;
+    font-weight: 600;
+   color: rgb(17, 17, 17);
+}
+.list-f{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 70%;
+    margin: auto;
+    background-color: rgb(255, 208, 0) ;
+    align-items: center;
+
+}
+
+.list-f  a{
+    text-decoration: none;
+    color: black;
+}
+.list-f  a:hover{
+    color: red;
+
+}
