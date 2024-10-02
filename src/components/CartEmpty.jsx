@@ -1,6 +1,7 @@
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import emptycart from "../assets/cartempty.png";
+import emptycart from "../assets/empty_cart.svg";
+// import'../style/TopMeals.css'
 
 function CartEmpty() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function CartEmpty() {
         </Col>
       </Row>
       <div className="text-center" style={{ marginTop: "30px" }}>
-        <Button variant="outline-primary" onClick={() => navigate("/")}>
+        <Button className='CartBtn' onClick={() => navigate("/")}>
           Back to Home
         </Button>
       </div>

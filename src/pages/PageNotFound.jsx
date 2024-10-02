@@ -1,5 +1,5 @@
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
-import NotFound from "../assets/notfound.png";
+import NotFound from "../assets/page_not_found.svg";
 import { useNavigate } from "react-router-dom";
 
 function PageNotFound() {
@@ -18,7 +18,7 @@ function PageNotFound() {
         </Col>
       </Row>
       <div className="text-center" style={{ marginTop: "30px" }}>
-        <Button variant="outline-primary" onClick={() => navigate("/")}>
+        <Button className="CartBtn"  onClick={() => navigate("/")}>
           Back to Home
         </Button>
       </div>

@@ -10,13 +10,13 @@ function CardMelas({ product, name, description, price, photoName }) {
 
   return (
     <Card className="card-s">
-      <Card.Img variant="top" src={photoName} style={{ maxHeight: "200px" }} />
+      <Card.Img variant="top" src={photoName} style={{ height: "200px" }} />
       <Card.Body>
         <Card.Title className="card-t">
           {name} <LoveIcon />
         </Card.Title>
         <hr />
-        <Card.Text>{description}</Card.Text>
+        <Card.Text style={{ height: "50px" }}>{description}</Card.Text>
         <Card.Text className="card-text">
           Price: {price} EGP
           <hr />
