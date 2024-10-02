@@ -1,26 +1,29 @@
-import { Container } from 'react-bootstrap';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import "../style/TopMeals.css"
-import CardMelas from './CardMeals';
-
+import { Container } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import "../style/TopMeals.css";
+import CardMelas from "./CardMeals";
+import productData from "../data/product.json";
 
 function TopMeals() {
-
+  console.log(productData);
   return (
-    <Container className='p-3 mt-3'>
-        <h1>Top Meals</h1>
-            <Row xs={1} md={2} lg={3} xl={4} >
-                {Array.from({ length: 4 }).map((_, idx) => (
-                    <Col>
-                       <CardMelas/>  
-                    </Col>
-                ))}
-                     
-            </Row>
-  </Container>
-   
-   
+    <Container className="p-3 mt-3">
+      <h1>Top Meals</h1>
+      <Row>
+        {productData.product.map((product) => (
+          <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
+            <CardMelas
+              product={product}
+              name={product.name}
+              description={product.description}
+              price={product.price}
+              photoName={product.photoName}
+            />
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 }
 
