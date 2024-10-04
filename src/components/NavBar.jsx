@@ -83,7 +83,7 @@ function NavBar() {
                 pill
                 bg="danger"
               >
-                {cart.length}
+                {0}
               </Badge>
             </Nav.Link>
           </Nav>
@@ -91,9 +91,9 @@ function NavBar() {
           <Nav>
             <NavDropdown
               style={{ marginLeft: "70px" }}
-              title="Profile"
               id="basic-nav-dropdown"
             >
+              
               <NavDropdown.Item href="#action/3.1">Login</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">Register</NavDropdown.Item>

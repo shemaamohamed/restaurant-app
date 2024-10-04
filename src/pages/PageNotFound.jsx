@@ -5,23 +5,26 @@ import { useNavigate } from "react-router-dom";
 function PageNotFound() {
   const navigate = useNavigate();
   const imgStyle = {
-    width: "700px",
-    height: "400px",
-    marginTop: "50px",
-    marginLeft: "300px",
+    width: "100%",
+    height: "70%",
+    margin: "auto",
+    marginTop: "100px",
+    
+    
   };
   return (
-    <Container>
+    <Container style={{height:'70vh',alignItems:'center',display:'flex',justifyContent:'center',flexDirection:'column'}}>
       <Row>
-        <Col xs={6} md={4}>
+        <Col >
           <Image src={NotFound} style={imgStyle} rounded />
+          <div className="text-center" style={{ marginTop: "30px" }}>
+            <Button className="CartBtn"  onClick={() => navigate("/")}>
+              Back to Home
+            </Button>
+          </div>
         </Col>
       </Row>
-      <div className="text-center" style={{ marginTop: "30px" }}>
-        <Button className="CartBtn"  onClick={() => navigate("/")}>
-          Back to Home
-        </Button>
-      </div>
+      
     </Container>
   );
 }

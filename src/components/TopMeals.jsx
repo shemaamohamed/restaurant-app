@@ -12,7 +12,7 @@ function TopMeals() {
       <h1>Top Meals</h1>
       <Row>
         {productData.product.map((product) => (
-          <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
+          <Col key={product.id} >
             <CardMelas
               product={product}
               name={product.name}
