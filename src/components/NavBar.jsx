@@ -92,6 +92,7 @@ function NavBar() {
             <NavDropdown
               style={{ marginLeft: "70px" }}
               id="basic-nav-dropdown"
+              title="Account"
             >
               
               <NavDropdown.Item href="#action/3.1">Login</NavDropdown.Item>

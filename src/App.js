@@ -8,6 +8,8 @@ import CartPage from "./pages/CartPage.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import { Toaster } from "react-hot-toast";
+import ItemsPage from './pages/Admin/ItemsPage';
+import AdditemPage from "./pages/Admin/AdditemPage.jsx";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/connect" element={<Connectpage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/items" element={<ItemsPage />} />
+          <Route path="/additem" element={<AdditemPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Toaster />
