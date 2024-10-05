@@ -3,19 +3,25 @@ import { Card } from 'react-bootstrap';
 import SideBar from '../components/SideBar';
 import LoveIcon from '../components/LoveIcon';
 import '../style/SideBar.css';
-
+import image1 from '../assets/B-meduim1.jpg';
+import image2 from '../assets/B-meduim2.jpg';
+import image3 from '../assets/B-meduim3.jpg';
+import image4 from '../assets/B-meduim4.jpg';
 function CheckoutPage() {
   const [quantities, setQuantities] = useState(Array(4).fill(1)); // Quantity state for each card
 
+  // Array to store the imported images
+  const images = [image1, image2, image3, image4];
+
   // Handlers for increment and decrement
   const incrementQuantity = (index) => {
-    setQuantities(prevQuantities =>
+    setQuantities((prevQuantities) =>
       prevQuantities.map((q, i) => (i === index ? q + 1 : q))
     );
   };
 
   const decrementQuantity = (index) => {
-    setQuantities(prevQuantities =>
+    setQuantities((prevQuantities) =>
       prevQuantities.map((q, i) => (i === index && q > 1 ? q - 1 : q))
     );
   };
@@ -26,12 +32,12 @@ function CheckoutPage() {
         <div className="row">
           <div className="col-sm-9">
             <div className="row">
-              {Array.from({ length: 4 }).map((_, index) => (
+              {images.map((img, index) => (
                 <div className="col-sm-4" key={index}>
                   <Card className="card-s">
                     <Card.Img
                       variant="top"
-                      src="https://via.placeholder.com/200"
+                      src={img} // Use the imported images here
                       style={{ height: '200px' }}
                     />
                     <Card.Body>
