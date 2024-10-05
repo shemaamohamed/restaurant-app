@@ -1,0 +1,36 @@
+.summary-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .summary-card p {
+    margin: 0;
+  }
+  
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .quantity-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .quantity-btn:hover {
+    background-color: #444;
+  }
+  
+  .quantity-controls span {
+    min-width: 20px;
+    text-align: center;
+  }
+  

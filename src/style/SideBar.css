@@ -1,0 +1,111 @@
+/* Global styles */
+body {
+    background-color: #f0f0f0; /* Light grey for better contrast */
+  }
+  
+  /* Card styles */
+  .card-s {
+    background-color: #ffeb3b; /* Yellow background for the card */
+    border: 2px solid #000000; /* Black border */
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card-s:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+  }
+  
+  .card-t {
+    color: #000000; /* Black title text */
+    font-weight: bold;
+  }
+  
+  .card-text {
+    color: #333333; /* Dark grey for text readability */
+  }
+  
+  .card-text del {
+    color: #ffffff; /* White for the original price text (strike-through) */
+  }
+  
+  .CartBtn {
+    background-color: #000000; /* Black background for button */
+    color: #ffffff; /* White text */
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .CartBtn:hover {
+    background-color: #ffeb3b; /* Yellow background on hover */
+    color: #000000; /* Black text on hover */
+  }
+  .sidebar {
+    background-color: yellow;
+    padding: 20px;
+    border-radius: 5px;
+    color: black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .summary-item p {
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+  
+  .summary-item hr {
+    margin: 10px 0;
+  }
+  
+  .checkout-btn {
+    width: 100%;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .checkout-btn:hover {
+    background-color: #444;
+  }
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .quantity-btn {
+    background-color: yellow;
+    color: black;
+    border: 1px solid black;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .quantity-btn:hover {
+    background-color: #ffcc00;
+  }
+  
+  .quantity-controls span {
+    min-width: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  
