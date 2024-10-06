@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
-import { Card } from 'react-bootstrap';
-import SideBar from '../components/SideBar';
-import LoveIcon from '../components/LoveIcon';
-import '../style/SideBar.css';
-import image1 from '../assets/B-meduim1.jpg';
-import image2 from '../assets/B-meduim2.jpg';
-import image3 from '../assets/B-meduim3.jpg';
-import image4 from '../assets/B-meduim4.jpg';
+import React, { useState } from "react";
+import { Card } from "react-bootstrap";
+import SideBar from "../components/SideBar";
+import LoveIcon from "../components/LoveIcon";
+import "../style/SideBar.css";
+import {
+  removeFromCart,
+  updateCartQuantity,
+} from "../features/CartSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 function CheckoutPage() {
-  const [quantities, setQuantities] = useState(Array(4).fill(1)); // Quantity state for each card
-
-  // Array to store the imported images
-  const images = [image1, image2, image3, image4];
-
-  // Handlers for increment and decrement
+  const navigate = useNavigate();
+  const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
   const incrementQuantity = (index) => {
-    setQuantities((prevQuantities) =>
-      prevQuantities.map((q, i) => (i === index ? q + 1 : q))
-    );
+    const updatedItem = { ...cart[index], quantity: cart[index].quantity + 1 };
+    dispatch(updateCartQuantity(updatedItem));
   };
 
   const decrementQuantity = (index) => {
-    setQuantities((prevQuantities) =>
-      prevQuantities.map((q, i) => (i === index && q > 1 ? q - 1 : q))
-    );
+    if (cart[index].quantity > 1) {
+      const updatedItem = { ...cart[index], quantity: cart[index].quantity - 1 };
+      dispatch(updateCartQuantity(updatedItem));
+    }
   };
 
   return (
@@ -32,26 +32,25 @@ function CheckoutPage() {
         <div className="row">
           <div className="col-sm-9">
             <div className="row">
-              {images.map((img, index) => (
-                <div className="col-sm-4" key={index}>
+              {cart.map((item, index) => (
+                <div className="col-sm-4" key={item.id}>
                   <Card className="card-s">
                     <Card.Img
                       variant="top"
-                      src={img} // Use the imported images here
-                      style={{ height: '200px' }}
+                      src={item.photoName} 
+                      style={{ height: "200px" }}
                     />
                     <Card.Body>
                       <Card.Title className="card-t">
-                        Static Meal {index + 1} <LoveIcon />
+                        {item.name} <LoveIcon />
                       </Card.Title>
                       <hr />
-                      <Card.Text style={{ height: '50px' }}>
-                        This is a description of the static meal.
+                      <Card.Text style={{ height: "50px" }}>
+                        {item.description}
                       </Card.Text>
                       <Card.Text className="card-text">
-                        Price: 150.00 EGP
+                        Price: {item.price} EGP
                         <hr />
-                        {/* Quantity controls */}
                         <div className="quantity-controls">
                           <button
                             onClick={() => decrementQuantity(index)}
@@ -59,7 +58,7 @@ function CheckoutPage() {
                           >
                             -
                           </button>
-                          <span>{quantities[index]}</span>
+                          <span>{item.quantity}</span>
                           <button
                             onClick={() => incrementQuantity(index)}
                             className="quantity-btn"
