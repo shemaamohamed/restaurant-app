@@ -58,7 +58,7 @@ body {
   }
   
   .quantity-btn:hover {
-    background-color: rgb(255, 208, 0);
+    background-color:red;
   }
   
   .quantity-controls span {
