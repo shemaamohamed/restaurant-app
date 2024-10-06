@@ -1,0 +1,35 @@
+.item-form-container{
+    width: 100%;
+
+}
+.item-form{
+    width: 100%;
+    padding: 30px;
+    justify-content: space-between;
+    display: flex;
+    margin: auto;
+    
+   
+}
+.item-form-1 ,.item-form-2{
+   
+    background-color: white;
+    padding: 10px;
+    font-size: medium;
+    font-weight: 500;
+    height: 55vh;
+
+
+}
+.item-form-1 {
+    width: 60%;
+
+}
+.item-form-2{
+    width: 39%;
+    text-align: center;
+}
+.description{
+    height: 10vh;
+    text-align: center;
+}
