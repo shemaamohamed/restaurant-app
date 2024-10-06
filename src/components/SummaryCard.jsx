@@ -3,8 +3,6 @@ import '../style/SummaryCard.css';
 
 function SummaryCard({ name, price, quantity }) {
   const [itemQuantity, setItemQuantity] = useState(quantity);
-
-  // Handlers for increment and decrement
   const incrementQuantity = () => {
     setItemQuantity(prevQuantity => prevQuantity + 1);
   };
@@ -23,7 +21,7 @@ function SummaryCard({ name, price, quantity }) {
         <span>{itemQuantity}</span>
         <button onClick={incrementQuantity} className="quantity-btn">+</button>
       </div>
-      <p>{itemQuantity} x {price} EGP</p>
+      <p>{itemQuantity * price} EGP</p>
     </div>
   );
 }

@@ -1,21 +1,18 @@
 import React from 'react';
 import SummaryCard from './SummaryCard';
 import '../style/SideBar.css';
-
+import { setCart } from "../features/CartSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 function SideBar() {
-  const summaryItems = [
-    { name: "Meal 1", price: 150, quantity: 1 },
-    { name: "Meal 2", price: 200, quantity: 2 },
-    { name: "Meal 3", price: 180, quantity: 1 },
-    // Add more items as needed
-  ];
-
+  const summaryItems = useSelector((state) => state.cart.cart);
+  const dispatch =useDispatch();
+  const navigate = useNavigate();
   // Calculate subtotal
   const subtotal = summaryItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const shipping = 50; // Static shipping fee
-  const discount = 25; // Static discount
+  const shipping = 0.1 * summaryItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const discount = 5
   const total = subtotal + shipping - discount;
-
   return (
     <div className="sidebar">
       <h4>Order Summary</h4>
@@ -35,7 +32,15 @@ function SideBar() {
         <p>Discount: <span>-{discount.toFixed(2)} EGP</span></p>
         <hr />
         <p><strong>Total: <span>{total.toFixed(2)} EGP</span></strong></p>
-        <button className="checkout-btn">Place Order</button>
+        <button
+  className="checkout-btn"
+  onClick={() => {
+    dispatch(setCart([]));
+    navigate("/order-confirmed",{ relative: "path" });
+  }}
+>
+  Place Order
+</button>
       </div>
     </div>
   );

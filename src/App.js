@@ -10,6 +10,7 @@ import CheckoutPage from "./pages/CheckoutPage.jsx";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import store from "./store/Store.jsx";
+import OrderConfirmedPage from "./pages/OrderConfirmedPage.jsx";
 function App() {
   return (
     <Provider store={store}>
@@ -21,6 +22,7 @@ function App() {
             <Route path="/connect" element={<Connectpage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="order-confirmed" element={<OrderConfirmedPage />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
           <Toaster />

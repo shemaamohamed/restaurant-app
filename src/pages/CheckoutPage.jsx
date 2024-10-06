@@ -9,7 +9,7 @@ import {
 } from "../features/CartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { Outlet } from "react-router-dom";
 function CheckoutPage() {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.cart);
@@ -79,6 +79,7 @@ function CheckoutPage() {
           </div>
         </div>
       </div>
+      <Outlet />
     </div>
   );
 }
