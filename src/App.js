@@ -8,26 +8,27 @@ import CartPage from "./pages/CartPage.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import { Toaster } from "react-hot-toast";
-import ItemsPage from './pages/Admin/ItemsPage';
-import AdditemPage from "./pages/Admin/AdditemPage.jsx";
-
+import { Provider } from "react-redux";
+import store from "./store/Store.jsx";
+import OrderConfirmedPage from "./pages/OrderConfirmedPage.jsx";
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <NavBar />
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/connect" element={<Connectpage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/items" element={<ItemsPage />} />
-          <Route path="/additem" element={<AdditemPage />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-        <Toaster />
-      </BrowserRouter>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/connect" element={<Connectpage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="order-confirmed" element={<OrderConfirmedPage />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+          <Toaster />
+        </BrowserRouter>
+      </div>
+    </Provider>
   );
 }
 

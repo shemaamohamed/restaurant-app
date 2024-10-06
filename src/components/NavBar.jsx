@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 function NavBar() {
   const cart = useSelector((state) => state.cart.cart);
-
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
   return (
     <Navbar
       expand="lg"
@@ -60,7 +60,7 @@ function NavBar() {
                 pill
                 bg="danger"
               >
-                {cart.length}
+                {totalQuantity}
               </Badge>
             </Nav.Link>
             <Nav.Link as={Link} to="/">
