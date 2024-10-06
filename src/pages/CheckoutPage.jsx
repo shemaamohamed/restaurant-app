@@ -1,17 +1,13 @@
-import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import SideBar from "../components/SideBar";
 import LoveIcon from "../components/LoveIcon";
 import "../style/SideBar.css";
 import {
-  removeFromCart,
   updateCartQuantity,
 } from "../features/CartSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 function CheckoutPage() {
-  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
   const incrementQuantity = (index) => {
@@ -28,7 +24,7 @@ function CheckoutPage() {
 
   return (
     <div>
-      <div className="container">
+      <div className="container" style={{'marginTop':'30px'}}>
         <div className="row">
           <div className="col-sm-9">
             <div className="row">

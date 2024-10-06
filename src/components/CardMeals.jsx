@@ -2,7 +2,6 @@ import { Card } from "react-bootstrap";
 import LoveIcon from "./LoveIcon";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/CartSlice";
-import toast from "react-hot-toast";
 // const background_image1 = require("../assets/burger.jpeg");
 
 function CardMelas({ product, name, description, price, photoName }) {
