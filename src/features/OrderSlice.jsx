@@ -6,14 +6,14 @@ import { createSlice } from "@reduxjs/toolkit";
             : [],
     };
     
-
+let count =  1 ; 
 const OrderSlice = createSlice({
     name: "ordered-products",
     initialState,
     reducers: {
         addToOrdered(state, action) {
             const ordered = action.payload;
-            state.trackedOrdered.push({ ...ordered, quantity: 1 ,soldOut:null , deliverDays : 3});
+            state.trackedOrdered.push({ ...ordered, quantity: 1 ,soldOut:null , deliverDays : 3,orderId : ++count});
             localStorage.setItem("ordered-products", JSON.stringify(state.trackedOrdered));
         },
         deliveredOrder(state, action) {
