@@ -4,6 +4,7 @@ import '../style/SideBar.css';
 import { setCart } from "../features/CartSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { addToOrdered, logOrderedItems } from '../features/OrderSlice';
 function SideBar() {
   const summaryItems = useSelector((state) => state.cart.cart);
   const dispatch =useDispatch();
@@ -13,6 +14,13 @@ function SideBar() {
   const shipping = 0.1 * summaryItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const discount = 5
   const total = subtotal + shipping - discount;
+  const handlePlaceOrder = () => {
+    
+    summaryItems.forEach(item => {
+      dispatch(addToOrdered(item));
+    });
+    dispatch(logOrderedItems());
+  }
   return (
     <div className="sidebar">
       <h4>Order Summary</h4>
@@ -36,7 +44,8 @@ function SideBar() {
   className="checkout-btn"
   onClick={() => {
     dispatch(setCart([]));
-    navigate("/order-confirmed",{ relative: "path" });
+    handlePlaceOrder()
+    navigate("/order-confirmed",{ relative: "path" })
   }}
 >
   Place Order
