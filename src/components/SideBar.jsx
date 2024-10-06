@@ -35,7 +35,7 @@ function SideBar() {
         <p>Discount: <span>-{discount.toFixed(2)} EGP</span></p>
         <hr />
         <p><strong>Total: <span>{total.toFixed(2)} EGP</span></strong></p>
-        <button className="checkout-btn">Proceed to Checkout</button>
+        <button className="checkout-btn">Place Order</button>
       </div>
     </div>
   );
