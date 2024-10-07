@@ -1,0 +1,39 @@
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, useTheme } from '@mui/material';
+import '../style/CheckDelete.css'
+import { Modal, Button } from 'react-bootstrap';
+
+
+function CheckDelete({ show, onHide, onConfirm, itemName }) {
+  const theme = useTheme();
+    
+   
+  return (
+      <Dialog
+    open={show}
+    onClose={onHide}
+    aria-labelledby="responsive-dialog-title"
+  >
+    <DialogTitle id="responsive-dialog-title">
+      Confirm Delete
+    </DialogTitle>
+    <DialogContent>
+      <DialogContentText>
+      Are you sure you want to delete <strong>{itemName}</strong>?
+      </DialogContentText>
+    </DialogContent>
+    <DialogActions>
+    <Button variant="secondary" onClick={onHide} autoFocus>
+        Cancel
+      </Button>
+      <Button variant="danger" onClick={onConfirm} autoFocus>
+        Delete
+      </Button>
+    </DialogActions>
+  </Dialog>
+ 
+
+  )
+}
+
+export default CheckDelete
+
