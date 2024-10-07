@@ -40,7 +40,7 @@ const CartSlice = createSlice({
     },
   },
 });
-console.log(CartSlice);
+
 export const { addToCart, removeFromCart, updateCartQuantity, setCart } =
   CartSlice.actions;
 
