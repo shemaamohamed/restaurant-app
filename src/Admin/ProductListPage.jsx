@@ -4,27 +4,40 @@ import EditButton from "../components/Buttons/EditButton";
 import DeleteButton from "../components/Buttons/DeleteButton";
 import AddButton from "../components/Buttons/AddButton";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setItem } from "../features/ItemSlice";
 
 function ProductListPage() {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/product");
-        setProducts(response.data);
+  const item = useSelector((state) => state.item.item);
+  console.log(item);
+  useEffect(()=>{
+    const fetchItems= async()=>{
+     await axios.get('http://localhost:8000/product')
+      .then(response => {
+        dispatch(setItem(response.data));
+        console.log(response.data);
         setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
 
-    fetchProducts();
-  }, []);
+      }).catch(error=>{
+        setError(error.message);
+       console.error('Error fetching data:', error);
+       setLoading(false);
 
+      }) 
+
+    }
+      
+    fetchItems();
+    const intervalId = setInterval(() => {
+      fetchItems();
+    }, 1000); 
+
+    return () => clearInterval(intervalId);
+  },[dispatch])
   if (loading) {
     return (
       <Container className="text-center" style={{ marginTop: "20px" }}>
@@ -40,7 +53,6 @@ function ProductListPage() {
       </Container>
     );
   }
-
   return (
     <Container style={{ marginTop: "20px" }}>
       <Stack
@@ -64,19 +76,28 @@ function ProductListPage() {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <tr key={product.id}>
-              <td>{product.id}</td>
+          {item.map((item,index) => (
+            <tr key={index}>
+              <td>{index+1}</td>
               <td>
-                <img src={product.photoName} alt={product.name} width="50" />
+              <img 
+                  src={item.photoName 
+                    ? (item.photoName.startsWith('http') 
+                      ? item.photoName 
+                      : require(`../assets/${item.photoName}`)) 
+                    : require('../assets/B-meduim1.jpg')} 
+                  alt={item.name} 
+                  width="50" 
+                  // onError={(e) => { e.target.src = require('../../assets/B-meduim1.jpg'); }} 
+                />
               </td>
-              <td>{product.name}</td>
-              <td>{product.description}</td>
-              <td>{product.price} EGP</td>
+              <td>{item.name}</td>
+              <td>{item.description}</td>
+              <td>{item.price} EGP</td>
               <td>
                 <Stack direction="horizontal" gap={3}>
                   <EditButton />
-                  <DeleteButton />
+                  <DeleteButton name={item.name} />
                 </Stack>
               </td>
             </tr>
