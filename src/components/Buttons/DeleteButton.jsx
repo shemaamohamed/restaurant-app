@@ -19,7 +19,6 @@ function DeleteButton({name}) {
       console.log(`Deleting item ${name}`);
       axios.delete(`http://localhost:8000/product/${itemToDelete.id}`)
       .then(response => {
-        console.log(`Item ${name} deleted successfully`);
         dispatch(removeItem(name)); // Dispatch the delete action
         setShowModal(false); 
         toast.success("Item deleted successfully");

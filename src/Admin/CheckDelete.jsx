@@ -1,12 +1,9 @@
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, useTheme } from '@mui/material';
 import '../style/CheckDelete.css'
-import { Modal, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 
-function CheckDelete({ show, onHide, onConfirm, itemName }) {
-  const theme = useTheme();
-    
-   
+function CheckDelete({ show, onHide, onConfirm, itemName }) { 
   return (
       <Dialog
     open={show}
