@@ -6,6 +6,17 @@ import AddButton from "../components/Buttons/AddButton";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../features/ItemSlice";
+import { Link } from 'react-router-dom';
+{/* <img 
+src={item.photoName 
+  ? (item.photoName.startsWith('http') 
+    ? item.photoName 
+    : require(`../assets/${item.photoName}`)) 
+  : require('../assets/B-meduim1.jpg')} 
+alt={item.name} 
+width="50" 
+// onError={(e) => { e.target.src = require('../../assets/B-meduim1.jpg'); }} 
+/> */}
 
 function ProductListPage() {
   const dispatch = useDispatch();
@@ -61,7 +72,7 @@ function ProductListPage() {
         style={{ justifyContent: "space-between" }}
       >
         <h1>Products</h1>
-        <AddButton />
+        <AddButton  />
       </Stack>
 
       <Table striped bordered hover responsive>
@@ -81,11 +92,7 @@ function ProductListPage() {
               <td>{index+1}</td>
               <td>
               <img 
-                  src={item.photoName 
-                    ? (item.photoName.startsWith('http') 
-                      ? item.photoName 
-                      : require(`../assets/${item.photoName}`)) 
-                    : require('../assets/B-meduim1.jpg')} 
+                  src={item.photoName }
                   alt={item.name} 
                   width="50" 
                   // onError={(e) => { e.target.src = require('../../assets/B-meduim1.jpg'); }} 

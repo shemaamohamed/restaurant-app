@@ -35,14 +35,6 @@
       "photoName": "https://w7.pngwing.com/pngs/675/302/png-transparent-pizza-buffalo-wing-tandoori-chicken-bread-restaurant-pizza.png",
       "soldOut": false,
       "customerName": "hani"
-    },
-    {
-      "name": "Pizza Quattro Stagioni",
-      "description": "Tomato, mozzarella, artichokes, ham, mushrooms, and olives",
-      "price": "14",
-      "discount": "2",
-      "photoName": "",
-      "id": 6
     }
   ]
 }

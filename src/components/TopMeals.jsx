@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import "../style/TopMeals.css";
 import CardMelas from "./CardMeals";
-import productData from "../data/product.json";
+import productData from "../../src/product.json";
 
 function TopMeals() {
   console.log(productData);

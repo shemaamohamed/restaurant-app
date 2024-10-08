@@ -1,49 +1,78 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Form, Row, Stack } from "react-bootstrap";
 import SaveButton from "../components/Buttons/SaveButton";
 import "../style/ItemForm.css";
 import UploadImage from "../components/UploadImage";
 import axios from "axios";
+import toast from "react-hot-toast";
+// import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+// import { addToItem } from "../features/ItemSlice";
 
 function AdditemPage() {
-  const [itemName, setItemName] = useState("");
-  const [itemDescription, setItemDescription] = useState("");
-  const [itemPrice, setItemPrice] = useState("");
-  const [itemDiscount, setitemDiscount] = useState("");
-  const [itemImage, setItemImage] = useState(null);
+  // const dispatch=useDispatch()
+  const navigate=useNavigate()
+  const [item,setItem]=useState({
+    name: '',
+    description: '',
+    price: '',
+    discount: '',
+    photoName:''
+  })
+  // const items = useSelector((state) => state.item.item);
+  const handleChange = (e) => {
+    setItem({ ...item, [e.target.name]: e.target.value });
+    console.log(item);
+  };
 
   // Handle file upload
   const handleImageUpload = (file) => {
-    setItemImage(file);
+    setItem({ ...item, photoName: file }); // Store the file in state
+
   };
+  useEffect(()=>{
+
+  },[item])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Item before form submission:", item); // Debugging log
 
-    // Create a FormData object to handle the data, including the image
-    const formData = new FormData();
-    formData.append("name", itemName);
-    formData.append("description", itemDescription);
-    formData.append("price", itemPrice);
-    formData.append("image", itemImage);
-
+    // const formData = new FormData();
+    // formData.append('name', item.name);
+    // formData.append('description', item.description);
+    // formData.append('price', item.price);
+    // formData.append('discount', item.discount);
+    // if (item.photoName instanceof File) {
+    //   formData.append('photoName', item.photoName);
+    // } 
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`); // Debugging log
+    // }
     try {
       const response = await axios.post(
-        // "API url",
-        formData,
+        "http://localhost:8000/product",
+        JSON.stringify(item), 
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json", 
           },
         }
+        // formData,
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        // }
       );
 
       console.log("Product added successfully:", response.data);
-      alert("done ");
-      setItemName("");
-      setItemDescription("");
-      setItemPrice("");
-      setItemImage(null);
+      // console.log(formData)
+      // console.log('after dispatch' ,items);
+      // dispatch(addToItem(item));
+      toast.success("Product added successfully");
+      navigate("/productlist");
+      
     } catch (error) {
       console.error("Error adding product:", error);
       alert("Error ");
@@ -52,26 +81,26 @@ function AdditemPage() {
 
   return (
     <Container style={{ marginTop: "20px" }}>
-      <Stack
-        direction="horizontal"
-        className="mb-6"
-        style={{ justifyContent: "space-between", flexWrap: "wrap" }}
-      >
-        <h4>Add New Item</h4>
-        <SaveButton onClick={handleSubmit} style={{ marginTop: "10px" }} />
-      </Stack>
-
       <Container className="item-form-container">
         <Form className="item-form" onSubmit={handleSubmit}>
           <Row>
             <Col md={6} xs={12} className="mb-3">
               <Form.Group controlId="formItemName">
+                    <Stack
+                      direction="horizontal"
+                      className="mb-6"
+                      style={{ justifyContent: "space-between", flexWrap: "wrap" }}
+                    >
+                        <h4>Add New Item</h4>
+                        <SaveButton type="submit"  style={{ marginTop: "10px" }} />
+                    </Stack>
                 <Form.Label>Name Item</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter Name of item"
-                  value={itemName}
-                  onChange={(e) => setItemName(e.target.value)}
+                  value={item.name}
+                  onChange={handleChange}
+                  name="name"
                 />
               </Form.Group>
 
@@ -81,8 +110,10 @@ function AdditemPage() {
                   as="textarea"
                   placeholder="Enter Description of item"
                   className="description"
-                  value={itemDescription}
-                  onChange={(e) => setItemDescription(e.target.value)}
+                  value={item.description}
+                  onChange={handleChange}
+                  name="description"
+
                 />
               </Form.Group>
 
@@ -91,8 +122,9 @@ function AdditemPage() {
                 <Form.Control
                   type="number"
                   placeholder="Enter Price of item"
-                  value={itemPrice}
-                  onChange={(e) => setItemPrice(e.target.value)}
+                  value={item.price}
+                  onChange={handleChange}
+                  name="price"
                 />
               </Form.Group>
               <Form.Group controlId="formItemDiscount" className="mb-3">
@@ -100,13 +132,14 @@ function AdditemPage() {
                 <Form.Control
                   type="number"
                   placeholder="Enter Price of item"
-                  value={itemDiscount}
-                  onChange={(e) => setitemDiscount(e.target.value)}
+                  value={item.discount}
+                  onChange={handleChange}
+                  name="discount"
                 />
               </Form.Group>
             </Col>
 
-            <Col md={4} xs={12} className="mb-3">
+            <Col md={6} xs={12} className="mb-3">
               <Form.Group controlId="formItemImage">
                 <Form.Label>Upload Image</Form.Label>
                 <UploadImage onUpload={handleImageUpload} />

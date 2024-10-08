@@ -19,7 +19,6 @@ import { ListItemIcon } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
   AddCircle,
-  Category,
   Message,
   Person,
   Shop,
@@ -27,7 +26,6 @@ import {
 import AdminProfile from "./AdminProfile";
 import AdditemPage from "./AdditemPage";
 import ProductListPage from "./ProductListPage";
-import UpdateitemPage from "./UpdateitemPage";
 import OrderPage from "./OrderPage";
 import MessagesPage from "./MessagesPage";
 
@@ -43,12 +41,6 @@ const ArrayPages = [
     icon: <ListIcon />,
     page: <ProductListPage />,
     path: "/productlist",
-  },
-  {
-    name: "Update item",
-    icon: <Category />,
-    page: <UpdateitemPage />,
-    path: "/updateitem",
   },
   {
     name: "AdminProfile",

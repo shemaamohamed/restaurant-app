@@ -1,28 +1,33 @@
-import { Col, Container, Image, Row } from "react-bootstrap"
-import Upload from "../assets/upload.svg";
+import { useState } from "react";
+import { Col, Container,  Row } from "react-bootstrap"
+import { Form } from 'react-bootstrap';
+import uploadImage  from "../assets/upload.svg";
 
 
-function UploadImage() {
-    const imgStyle = {
-        width: "100%",
-        height: "50%",
-        margin: "auto",
-        marginTop: "100px",
-        
-        
-      };
+
+function UploadImage({onUpload}) {
+  const [image, setImage] = useState(null);
+  const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          console.log("Uploaded image:", file); // Log the uploaded image file
+          setImage(URL.createObjectURL(file)); // Preview the image
+          onUpload(file); // Pass the file to the parent component
+        }
+      }
   return (
-    <Container style={{width:'100%'}}>
+    
         <Row>
         <Col >
-        <Image src={Upload}  style={imgStyle} rounded />
-        <input id="picture" style={{width:'100%'}} type="file" class="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"/>
+        <Form.Group controlId="formFile" className="mb-3">
+          {!image && <img src={uploadImage} alt="Preview" style={{ width: '70%', marginTop: '10 px' }}/>}
+          {image && <img src={image} alt="Preview" style={{ width: '70%', marginTop: '10 px' }} />}
+          <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
+        </Form.Group>
         </Col>
       </Row>
-        
-    </Container>
     
-  )
+  );
 }
 
-export default UploadImage
+export default UploadImage;

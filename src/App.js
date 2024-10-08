@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // import CheckoutPage from "./pages/CheckoutPage.jsx";
 // import OrderConfirmedPage from "./pages/OrderConfirmedPage.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+// import { Toaster } from "react-hot-toast";
 import "./App.css";
 
 import AdditemPage from "./Admin/AdditemPage.jsx";

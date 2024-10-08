@@ -2,12 +2,12 @@
 import axios from "axios";
 import CheckDelete from "../../Admin/CheckDelete";
 import"../../style/Button.css"
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useState } from "react";
-import { removeItem } from "../../features/ItemSlice";
+// import { removeItem } from "../../features/ItemSlice";
 import toast from "react-hot-toast";
 function DeleteButton({name}) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
   const handleDelete =async () => {
@@ -19,7 +19,7 @@ function DeleteButton({name}) {
       console.log(`Deleting item ${name}`);
       axios.delete(`http://localhost:8000/product/${itemToDelete.id}`)
       .then(response => {
-        dispatch(removeItem(name)); // Dispatch the delete action
+        // dispatch(removeItem(name)); // Dispatch the delete action
         setShowModal(false); 
         toast.success("Item deleted successfully");
       })
