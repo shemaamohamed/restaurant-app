@@ -2,7 +2,7 @@
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background-color: rgb(20, 20, 20);
+    background-color: gray;
     border: none;
     font-weight: 600;
     display: flex;
@@ -37,7 +37,9 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  background-color: black;
+  background-color: gray;
+  border: none  !important;
+
 }
 
 .button, .button__icon, .button__text {

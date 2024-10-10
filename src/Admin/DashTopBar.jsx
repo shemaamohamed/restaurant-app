@@ -23,7 +23,7 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  backgroundColor: "rgb(255, 208, 0) ",
+  backgroundColor: "white",
   color: "black",
   variants: [
     {

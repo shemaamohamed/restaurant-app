@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, useTheme } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import '../style/CheckDelete.css'
 import { Button } from 'react-bootstrap';
 
@@ -10,7 +10,7 @@ function CheckDelete({ show, onHide, onConfirm, itemName }) {
     onClose={onHide}
     aria-labelledby="responsive-dialog-title"
   >
-    <DialogTitle id="responsive-dialog-title">
+    <DialogTitle id="responsive-dialog-title" style={{textAlign:'center',fontWeight:'600'}}>
       Confirm Delete
     </DialogTitle>
     <DialogContent>
@@ -19,12 +19,13 @@ function CheckDelete({ show, onHide, onConfirm, itemName }) {
       </DialogContentText>
     </DialogContent>
     <DialogActions>
+    <Button variant="danger" onClick={onConfirm} autoFocus>
+        Delete
+      </Button>
     <Button variant="secondary" onClick={onHide} autoFocus>
         Cancel
       </Button>
-      <Button variant="danger" onClick={onConfirm} autoFocus>
-        Delete
-      </Button>
+      
     </DialogActions>
   </Dialog>
  
