@@ -22,6 +22,13 @@ const ItemSlice = createSlice({
         }
          
     },
+    updateItem(state, action) {
+      const updatedItem = action.payload;
+      const index = state.item.findIndex((item) => item.name === updatedItem.name);
+      if (index !== -1) {
+        state.item[index] = updatedItem;
+      }
+    },
     removeItem(state, action) {
       const itemName = action.payload;
       state.item = state.item.filter((item) => item.name !== itemName);

@@ -4,16 +4,17 @@
       "id": 1,
       "name": "Focaccia",
       "description": "Bread with Italian olive oil and rosemary",
-      "price": 6,
+      "price": "300",
       "photoName": "https://pngimg.com/d/pizza_PNG43989.png",
       "soldOut": false,
-      "customerName": "rami"
+      "customerName": "rami",
+      "discount": "6"
     },
     {
       "id": 2,
       "name": "Pizza Margherita",
       "description": "Tomato and mozzarella",
-      "price": 10,
+      "price": "400",
       "photoName": "https://t3.ftcdn.net/jpg/05/90/72/84/360_F_590728471_7M3MKf85St0AAh1ZcrMxoLrJ6j9Mz2RE.jpg",
       "soldOut": false,
       "customerName": "ahmed"
@@ -22,7 +23,7 @@
       "id": 3,
       "name": "Pizza Spinaci",
       "description": "Tomato, mozzarella, spinach, and ricotta cheese",
-      "price": 12,
+      "price": "330",
       "photoName": "https://static.vecteezy.com/system/resources/thumbnails/045/383/391/small/a-cheesy-delicious-pizza-with-tasty-pepperoni-on-a-transparent-background-png.png",
       "soldOut": false,
       "customerName": "mohamed"
@@ -31,15 +32,15 @@
       "id": 5,
       "name": "Pizza Funghi",
       "description": "Tomato, mozzarella, mushrooms, and onion",
-      "price": 12,
+      "price": "419",
       "photoName": "https://w7.pngwing.com/pngs/675/302/png-transparent-pizza-buffalo-wing-tandoori-chicken-bread-restaurant-pizza.png",
       "soldOut": false,
       "customerName": "hani"
     },
     {
-      "name": "Pizza Quattro Stagioni",
+      "name": "Pizza Quattroi",
       "description": "Tomato, mozzarella, artichokes, ham, mushrooms, and olives",
-      "price": "14",
+      "price": "500",
       "discount": "2",
       "photoName": "",
       "id": 6
