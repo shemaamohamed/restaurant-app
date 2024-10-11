@@ -12,6 +12,7 @@ import CartEmpty from "../components/CartEmpty";
 function CartPage() {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.cart);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
   const totalPrice = cart.reduce(
@@ -119,10 +120,15 @@ function CartPage() {
         <Row className="justify-content-end">
           <Col md={4}>
             <h4 className="text-end">Total price: {totalPrice} EGP</h4>
-            {cart.length === 0 ? (
-              <Button variant="primary" className="w-100" disabled>
-                Check Out
-              </Button>
+            {!user ? (
+              <>
+                <Button variant="primary" className="w-100" disabled>
+                  Check Out
+                </Button>
+                <p style={{ textAlign: "center", color: "red" }}>
+                  You need to log in first in order to checkout
+                </p>
+              </>
             ) : (
               <Button
                 onClick={() => navigate("/checkout")}
