@@ -1,81 +1,64 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Col, Container, Form, Row, Stack } from "react-bootstrap";
 import SaveButton from "../components/Buttons/SaveButton";
 import "../style/ItemForm.css";
 import UploadImage from "../components/UploadImage";
 import axios from "axios";
 import toast from "react-hot-toast";
-// import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { addToItem } from "../features/ItemSlice";
 
 function AdditemPage() {
-  // const dispatch=useDispatch()
-  const navigate=useNavigate()
-  const [item,setItem]=useState({
-    name: '',
-    description: '',
-    price: '',
-    discount: '',
-    photoName:''
-  })
-  // const items = useSelector((state) => state.item.item);
+  const navigate = useNavigate();
+  const [item, setItem] = useState({
+    name: "",
+    description: "",
+    price: "",
+    discount: "",
+    photoName: "",
+  });
+
+  const [errors, setErrors] = useState({}); // State for error messages
+
   const handleChange = (e) => {
     setItem({ ...item, [e.target.name]: e.target.value });
-    console.log(item);
+    setErrors({ ...errors, [e.target.name]: "" }); // Clear error when user types
   };
 
-  // Handle file upload
   const handleImageUpload = (file) => {
-    setItem({ ...item, photoName: file }); // Store the file in state
-
+    setItem({ ...item, photoName: file });
+    setErrors({ ...errors, photoName: "" }); // Clear error when image is uploaded
   };
-  useEffect(()=>{
 
-  },[item])
+  const validate = () => {
+    const newErrors = {};
+    if (!item.name) newErrors.name = "Item name is required";
+    if (!item.description)
+      newErrors.description = "Item description is required";
+    if (!item.price || isNaN(item.price) || item.price <= 0)
+      newErrors.price = "Valid price is required";
+    if (item.discount && (isNaN(item.discount) || item.discount < 0))
+      newErrors.discount = "Discount should be a positive number";
+    if (!item.photoName) newErrors.photoName = "Image is required";
+    return newErrors;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Item before form submission:", item); // Debugging log
+    const formErrors = validate();
 
-    // const formData = new FormData();
-    // formData.append('name', item.name);
-    // formData.append('description', item.description);
-    // formData.append('price', item.price);
-    // formData.append('discount', item.discount);
-    // if (item.photoName instanceof File) {
-    //   formData.append('photoName', item.photoName);
-    // } 
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(`${key}: ${value}`); // Debugging log
-    // }
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors); // Set error messages if validation fails
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        "http://localhost:8000/product",
-        JSON.stringify(item), 
-        {
-          headers: {
-            "Content-Type": "application/json", 
-          },
-        }
-        // formData,
-        // {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data",
-        //   },
-        // }
-      );
-
-      console.log("Product added successfully:", response.data);
-      // console.log(formData)
-      // console.log('after dispatch' ,items);
-      // dispatch(addToItem(item));
+      await axios.post("http://localhost:8000/product", item, {
+        headers: { "Content-Type": "application/json" },
+      });
       toast.success("Product added successfully");
       navigate("/productlist");
-      
     } catch (error) {
-      console.error("Error adding product:", error);
-      alert("Error ");
+      toast.error("Error adding product");
     }
   };
 
@@ -85,15 +68,15 @@ function AdditemPage() {
         <Form className="item-form" onSubmit={handleSubmit}>
           <Row>
             <Col md={6} xs={12} className="mb-3">
+              <Stack
+                direction="horizontal"
+                className="mb-6"
+                style={{ justifyContent: "space-between", flexWrap: "wrap" }}
+              >
+                <h4>Add New Item</h4>
+                <SaveButton type="submit" style={{ marginTop: "10px" }} />
+              </Stack>
               <Form.Group controlId="formItemName">
-                    <Stack
-                      direction="horizontal"
-                      className="mb-6"
-                      style={{ justifyContent: "space-between", flexWrap: "wrap" }}
-                    >
-                        <h4>Add New Item</h4>
-                        <SaveButton type="submit"  style={{ marginTop: "10px" }} />
-                    </Stack>
                 <Form.Label>Name Item</Form.Label>
                 <Form.Control
                   type="text"
@@ -101,7 +84,11 @@ function AdditemPage() {
                   value={item.name}
                   onChange={handleChange}
                   name="name"
+                  isInvalid={!!errors.name} // Display error if any
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.name}
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="formItemDescription" className="mb-3">
@@ -109,12 +96,14 @@ function AdditemPage() {
                 <Form.Control
                   as="textarea"
                   placeholder="Enter Description of item"
-                  className="description"
                   value={item.description}
                   onChange={handleChange}
                   name="description"
-
+                  isInvalid={!!errors.description}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.description}
+                </Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group controlId="formItemPrice" className="mb-3">
@@ -125,17 +114,26 @@ function AdditemPage() {
                   value={item.price}
                   onChange={handleChange}
                   name="price"
+                  isInvalid={!!errors.price}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.price}
+                </Form.Control.Feedback>
               </Form.Group>
+
               <Form.Group controlId="formItemDiscount" className="mb-3">
                 <Form.Label>Discount</Form.Label>
                 <Form.Control
                   type="number"
-                  placeholder="Enter Price of item"
+                  placeholder="Enter Discount of item"
                   value={item.discount}
                   onChange={handleChange}
                   name="discount"
+                  isInvalid={!!errors.discount}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.discount}
+                </Form.Control.Feedback>
               </Form.Group>
             </Col>
 
@@ -143,6 +141,11 @@ function AdditemPage() {
               <Form.Group controlId="formItemImage">
                 <Form.Label>Upload Image</Form.Label>
                 <UploadImage onUpload={handleImageUpload} />
+                {errors.photoName && (
+                  <div className="invalid-feedback d-block">
+                    {errors.photoName}
+                  </div>
+                )}
               </Form.Group>
             </Col>
           </Row>

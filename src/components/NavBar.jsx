@@ -4,10 +4,18 @@ import { Badge, Navbar } from "react-bootstrap";
 import { NavDropdown } from "react-bootstrap";
 import "../style/NavBar.css";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../features/AuthSlice";
 
 function NavBar() {
   const cart = useSelector((state) => state.cart.cart);
+  const wishes = useSelector((state) => state.wishlist.wishes || []);
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  console.log(user);
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
   return (
     <Navbar
@@ -32,13 +40,13 @@ function NavBar() {
             <Nav.Link as={Link} to="/menu">
               Menu
             </Nav.Link>
-            
+
             <Nav.Link as={Link} to="/connect">
               Contact
             </Nav.Link>
           </Nav>
           <Nav>
-          <Nav.Link as={Link} to="/cart">
+            <Nav.Link as={Link} to="/cart">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="2em"
@@ -63,8 +71,8 @@ function NavBar() {
                 {totalQuantity}
               </Badge>
             </Nav.Link>
-            <Nav.Link as={Link} to="/">
-            <svg
+            <Nav.Link as={Link} to="/wishlist">
+              <svg
                 class="icon"
                 xmlns="http://www.w3.org/2000/svg"
                 width="20.503"
@@ -83,23 +91,40 @@ function NavBar() {
                 pill
                 bg="danger"
               >
-                {0}
+                {wishes.length}
               </Badge>
             </Nav.Link>
           </Nav>
-          
-          <Nav>
-            <NavDropdown
-              style={{ marginLeft: "70px" }}
-              id="basic-nav-dropdown"
-              title="Account"
-            >
-              
-              <NavDropdown.Item href="#action/3.1">Login</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Register</NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
+
+          {user ? (
+            <Nav>
+              <NavDropdown
+                style={{ marginLeft: "70px" }}
+                id="basic-nav-dropdown"
+                title="Account"
+              >
+                <NavDropdown.Item onClick={handleLogout}>
+                  Log out
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          ) : (
+            <Nav>
+              <NavDropdown
+                style={{ marginLeft: "70px" }}
+                id="basic-nav-dropdown"
+                title="Account"
+              >
+                <NavDropdown.Item as={Link} to="/login">
+                  Login
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item as={Link} to="/signup">
+                  Register
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

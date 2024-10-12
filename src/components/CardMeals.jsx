@@ -1,18 +1,31 @@
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import LoveIcon from "./LoveIcon";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/CartSlice";
+import { addToWishlist } from "../features/WishListSlice";
+import toast from "react-hot-toast";
 // const background_image1 = require("../assets/burger.jpeg");
 
 function CardMelas({ product, name, description, price, photoName }) {
-  const dipatch = useDispatch();
+  const dispatch = useDispatch();
 
+  console.log(dispatch);
   return (
     <Card className="card-s">
       <Card.Img variant="top" src={photoName} style={{ height: "200px" }} />
       <Card.Body>
         <Card.Title className="card-t">
-          {name} <LoveIcon />
+          {name}
+          <Button
+            style={{ backgroundColor: "white", border: "none" }}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevents the card click from firing
+              toast.success("Added to WishList");
+              dispatch(addToWishlist(product));
+            }}
+          >
+            <LoveIcon />
+          </Button>
         </Card.Title>
         <hr />
         <Card.Text style={{ height: "50px" }}>{description}</Card.Text>
@@ -22,7 +35,12 @@ function CardMelas({ product, name, description, price, photoName }) {
           <del>Price: 250.00 EGP</del>
         </Card.Text>
 
-        <button onClick={() => dipatch(addToCart(product))} className="CartBtn">
+        <button
+          onClick={() =>
+            dispatch(addToCart(product), toast.success("Added to cart"))
+          }
+          className="CartBtn"
+        >
           <span class="IconContainer">
             <svg
               xmlns="http://www.w3.org/2000/svg"

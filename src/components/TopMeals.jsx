@@ -7,12 +7,13 @@ import productData from "../../src/product.json";
 
 function TopMeals() {
   console.log(productData);
+
   return (
     <Container className="p-3 mt-3">
       <h1>Top Meals</h1>
       <Row>
         {productData.product.map((product) => (
-          <Col key={product.id} >
+          <Col key={product.id}>
             <CardMelas
               product={product}
               name={product.name}
