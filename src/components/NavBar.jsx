@@ -3,9 +3,11 @@ import Nav from "react-bootstrap/Nav";
 import { Badge, Navbar } from "react-bootstrap";
 import { NavDropdown } from "react-bootstrap";
 import "../style/NavBar.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/AuthSlice";
+import { FaUserCircle } from 'react-icons/fa';
+
 
 function NavBar() {
   const cart = useSelector((state) => state.cart.cart);
@@ -24,7 +26,7 @@ function NavBar() {
       variant="light"
       sticky="top"
     >
-      <Container>
+      <Container style={{width:'100%'}}>
         <Navbar.Brand as={Link} to="/">
           YummY 😋
         </Navbar.Brand>
@@ -33,16 +35,18 @@ function NavBar() {
           style={{ justifyContent: "space-around" }}
           id="basic-navbar-nav"
         >
-          <Nav className="navdisplay">
-            <Nav.Link as={Link} to="/">
+          <Nav className="navdisplay justify-content-start flex-grow-1 pe-4">
+            <Nav.Link as={NavLink} exact to="/"  activeClassName="active">
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/menu">
+            <Nav.Link as={NavLink} to="/menu" activeClassName="active">
               Menu
             </Nav.Link>
-
-            <Nav.Link as={Link} to="/connect">
+            <Nav.Link as={NavLink} to="/connect" activeClassName="active">
               Contact
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/about" activeClassName="active">
+              About
             </Nav.Link>
           </Nav>
           <Nav>
@@ -54,14 +58,17 @@ function NavBar() {
                 stroke-linejoin="round"
                 stroke-linecap="round"
                 viewBox="0 0 24 24"
-                stroke-width="2"
+                stroke-width="1.5"
                 fill="none"
                 stroke="currentColor"
                 color="black"
               >
                 <circle r="1" cy="21" cx="9"></circle>
                 <circle r="1" cy="21" cx="20"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                <path 
+                d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                transform="translate(0 0)"
+                ></path>
               </svg>
               <Badge
                 style={{ position: "relative", bottom: "5px", left: "3px" }}
@@ -75,10 +82,13 @@ function NavBar() {
               <svg
                 class="icon"
                 xmlns="http://www.w3.org/2000/svg"
-                width="20.503"
-                height="20.625"
+                width="21.503"
+                height="21.625"
                 viewBox="0 0 17.503 15.625"
                 color="black"
+
+                
+
               >
                 <path
                   id="Fill"
@@ -86,6 +96,7 @@ function NavBar() {
                   transform="translate(0 0)"
                 ></path>
               </svg>
+              {' '}
               <Badge
                 style={{ position: "relative", bottom: "5px", left: "5px" }}
                 pill
@@ -94,22 +105,19 @@ function NavBar() {
                 {wishes.length}
               </Badge>
             </Nav.Link>
-          </Nav>
-
+            
           {user ? (
-            <Nav>
               <NavDropdown
                 style={{ marginLeft: "70px" }}
                 id="basic-nav-dropdown"
-                title="Account"
+                title={<FaUserCircle size={30}/>}
               >
+                
                 <NavDropdown.Item onClick={handleLogout}>
                   Log out
                 </NavDropdown.Item>
               </NavDropdown>
-            </Nav>
           ) : (
-            <Nav>
               <NavDropdown
                 style={{ marginLeft: "70px" }}
                 id="basic-nav-dropdown"
@@ -123,8 +131,9 @@ function NavBar() {
                   Register
                 </NavDropdown.Item>
               </NavDropdown>
-            </Nav>
           )}
+          </Nav>
+
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -1,9 +1,10 @@
-import { Table, Container, Button, Card } from "react-bootstrap";
+import { Table, Container, Button, Card, Row, Col } from "react-bootstrap";
 import WishEmpty from "../components/WishEmpty";
 import { addToCart } from "../features/CartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromWishlist } from "../features/WishListSlice";
 import toast from "react-hot-toast";
+import "../style/WishList.css";
 
 function WishListPage() {
   const wishes = useSelector((state) => state.wishlist.wishes || []);
@@ -11,55 +12,60 @@ function WishListPage() {
 
   return (
     <Container className="mt-4">
-      <h3 className="mb-3 text-center text-md-start">My Wishlist</h3>
+      <h3 className="mb-3 text-center text-md-center">My Wishlist</h3>
       {wishes.length > 0 ? (
-        <Table responsive="sm" className="table-bordered">
+        <Table responsive className="table table-borderless wishlist-table rounded">
           <thead className="text-center">
             <tr>
-              <th>#</th>
               <th>Product image</th>
               <th>Product Name</th>
-              <th>Price</th>
-              <th>Remove</th>
-              <th>Add to Cart</th>
+              <th>Product Price</th>
+              <th colSpan={3} ></th>
+              
             </tr>
           </thead>
           <tbody>
             {wishes.map((item, index) => (
               <tr key={item.id}>
-                <td className="text-center">{index + 1}</td>
-                <td className="text-center">
+                <td className="text-center align-middle" >
                   <Card.Img
-                    style={{ width: "80px", height: "auto" }}
-                    src={item.image}
+                    style={{ width: "180px", height: "auto" }}
+                    src={item.photoName}
                     alt={item.name}
                   />
                 </td>
-                <td className="text-center">{item.name}</td>
-                <td className="text-center">{item.price}</td>
-                <td className="text-center">
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    className="mb-2"
-                    onClick={() => dispatch(removeFromWishlist(item.id))}
-                  >
-                    Remove
-                  </Button>
-                </td>
-                <td className="text-center">
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    className="mb-2"
+                <td className="text-center align-middle">{item.name}</td>
+                <td className="align-middle text-center ">{item.price}</td>
+                <td className="align-middle text-center">
+                    <button
+                    className="button-add"
                     onClick={() => {
                       dispatch(addToCart(item));
                       toast.success("Added to cart");
                     }}
                   >
-                    Add to Cart
-                  </Button>
+                    Add 
+                  </button>
+                  {'  '}
+                  <button
+                    className="button-remove"
+                    size="sm"
+                    onClick={() =>{
+                      dispatch(removeFromWishlist(item.id))
+
+                    }
+                      
+                      }
+                  >
+                    x
+                  </button>
+                  
+
+                    
+                
+                 
                 </td>
+              
               </tr>
             ))}
           </tbody>

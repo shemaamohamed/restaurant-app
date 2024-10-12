@@ -1,0 +1,42 @@
+.wishlist-table {
+    width: 70%;
+    margin: auto;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+    border-radius: 10px;
+    overflow: hidden;
+
+
+
+ 
+}
+.button-add{
+    width: 60px;
+    border: none !important;
+    font-size: 20px;
+    background-color:rgb(255, 208, 0);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+    font-size: 1.04em;
+    font-weight: 600;
+    margin-top: 3px;
+    color: rgb(17, 17, 17);
+    border-radius: 120px;
+    border: none;
+
+}
+.button-add:hover{
+    background-color:rgb(0, 0, 0);
+    color: white;
+
+}
+.button-remove{
+    width: 20px;
+    text-align: center;
+    background-color: white;
+    color: rgb(255, 208, 0);
+    border: none !important;
+    font-weight: 600;
+    font-size: 20px;
+}
+.button-remove:hover{
+    color: red;
+}
