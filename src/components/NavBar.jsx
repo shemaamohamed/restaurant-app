@@ -7,6 +7,10 @@ import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/AuthSlice";
 import { FaUserCircle } from 'react-icons/fa';
+import Logo from "../assets/icon-food.svg"
+import Cart from "../assets/cart.svg"
+import Heart from "../assets/heart (2).svg"
+import Profile from "../assets/userprofile.svg"
 
 
 function NavBar() {
@@ -28,7 +32,16 @@ function NavBar() {
     >
       <Container style={{width:'100%'}}>
         <Navbar.Brand as={Link} to="/">
-          YummY 😋
+          YummY
+          <img
+            src={Logo}
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            style={{ marginLeft: "2px" }}
+            alt=""
+          />
+
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse
@@ -51,27 +64,16 @@ function NavBar() {
           </Nav>
           <Nav>
             <Nav.Link as={Link} to="/cart">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2em"
-                height="1.5em"
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                fill="none"
-                stroke="currentColor"
-                color="black"
-              >
-                <circle r="1" cy="21" cx="9"></circle>
-                <circle r="1" cy="21" cx="20"></circle>
-                <path 
-                d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
-                transform="translate(0 0)"
-                ></path>
-              </svg>
+             <img
+                src={Cart}
+                width="30"
+                height="30"
+                className="d-inline-block align-center"
+                style={{ marginLeft: "2px" }}
+                alt="Cart"
+             />
               <Badge
-                style={{ position: "relative", bottom: "5px", left: "3px" }}
+                style={{ position: "relative", bottom: "5px", left: "3px" ,width:'20px' ,height:'20px'}}
                 pill
                 bg="danger"
               >
@@ -79,26 +81,16 @@ function NavBar() {
               </Badge>
             </Nav.Link>
             <Nav.Link as={Link} to="/wishlist">
-              <svg
-                class="icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="21.503"
-                height="21.625"
-                viewBox="0 0 17.503 15.625"
-                color="black"
-
-                
-
-              >
-                <path
-                  id="Fill"
-                  d="M8.752,15.625h0L1.383,8.162a4.824,4.824,0,0,1,0-6.762,4.679,4.679,0,0,1,6.674,0l.694.7.694-.7a4.678,4.678,0,0,1,6.675,0,4.825,4.825,0,0,1,0,6.762L8.752,15.624ZM4.72,1.25A3.442,3.442,0,0,0,2.277,2.275a3.562,3.562,0,0,0,0,5l6.475,6.556,6.475-6.556a3.563,3.563,0,0,0,0-5A3.443,3.443,0,0,0,12.786,1.25h-.01a3.415,3.415,0,0,0-2.443,1.038L8.752,3.9,7.164,2.275A3.442,3.442,0,0,0,4.72,1.25Z"
-                  transform="translate(0 0)"
-                ></path>
-              </svg>
-              {' '}
+            <img
+                src={Heart}
+                width="30"
+                height="30"
+                className="d-inline-block align-center"
+                style={{ marginLeft: "2px" }}
+                alt="Heart"
+             />
               <Badge
-                style={{ position: "relative", bottom: "5px", left: "5px" }}
+                style={{ position: "relative", bottom: "5px", left: "5px",width:'20px' ,height:'20px' }}
                 pill
                 bg="danger"
               >
@@ -108,10 +100,20 @@ function NavBar() {
             
           {user ? (
               <NavDropdown
-                style={{ marginLeft: "70px" }}
-                id="basic-nav-dropdown"
-                title={<FaUserCircle size={30}/>}
-              >
+                style={{ marginLeft: "40px" }}
+                title= {
+                  <>
+                    Profile
+                    <img
+                      src={Profile}
+                      className="d-inline-block align-center"
+                      alt="Profile"
+                      style={{ width: "30px", height: "30px", marginRight: "10px" }}
+                    />
+                    
+                  </>
+                }>
+              
                 
                 <NavDropdown.Item onClick={handleLogout}>
                   Log out

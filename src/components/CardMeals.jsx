@@ -12,7 +12,7 @@ function CardMelas({ product, name, description, price, photoName }) {
   console.log(dispatch);
   return (
     <Card className="card-s">
-      <Card.Img variant="top" src={photoName} style={{ height: "200px" }} />
+      <Card.Img variant="top" src={photoName} style={{ height: "150px" }} />
       <Card.Body>
         <Card.Title className="card-t">
           {name}

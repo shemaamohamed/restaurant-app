@@ -10,8 +10,8 @@ function TopMeals() {
 
   return (
     <Container className="p-3 mt-3">
-      <h1>Top Meals</h1>
-      <Row>
+      <h1 className="text-center align-middle">Top Meals</h1>
+      <Row className="p-3" >
         {productData.product.map((product) => (
           <Col key={product.id}>
             <CardMelas
