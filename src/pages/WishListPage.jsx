@@ -12,9 +12,10 @@ function WishListPage() {
 
   return (
     <Container className="mt-4">
-      <h3 className="mb-3 text-center text-md-center">My Wishlist</h3>
+     <h3 className="mb-3 text-center text-md-center">My Wishlist</h3>
       {wishes.length > 0 ? (
-        <Table responsive className="table table-borderless wishlist-table rounded">
+        <>
+        <Table  responsive="sm" className="table table-borderless wishlist-table rounded">
           <thead className="text-center">
             <tr>
               <th>Product image</th>
@@ -29,7 +30,7 @@ function WishListPage() {
               <tr key={item.id}>
                 <td className="text-center align-middle" >
                   <Card.Img
-                    style={{ width: "180px", height: "auto" }}
+                    style={{ width: "80px", height: "auto" }}
                     src={item.photoName}
                     alt={item.name}
                   />
@@ -70,6 +71,9 @@ function WishListPage() {
             ))}
           </tbody>
         </Table>
+        
+        </>
+        
       ) : (
         <WishEmpty />
       )}

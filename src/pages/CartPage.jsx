@@ -51,7 +51,7 @@ function CartPage() {
               marginBottom: "20px",
             }}
           >
-            <h2>Shopping Cart</h2>
+            <h3  className="mb-3 text-center text-md-center">Shopping Cart</h3>
             {cart.length > 0 && (
               <Button variant="danger" onClick={() => handleDeleteAll()}>
                 Delete All
@@ -98,6 +98,7 @@ function CartPage() {
                       >
                         +
                       </Button>
+                      {'  '}
                       <Button
                         variant="outline-danger"
                         className="ml-3"

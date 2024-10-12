@@ -1,13 +1,12 @@
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
-import emptywishes from "../assets/emptyWishList.svg";
+import emptywishes from "../assets/wishlist.svg";
 import { useNavigate } from "react-router-dom";
 
 function WishEmpty() {
   const navigate = useNavigate();
   const imgStyle = {
     width: "100%",
-    height: "50%",
-    margin: "auto",
+    height: "70%",
     marginTop: "100px",
   };
   return (
