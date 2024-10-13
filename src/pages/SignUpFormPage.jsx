@@ -8,15 +8,24 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { signUp } from "../features/AuthSlice";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 
 function SignUpFormPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const handleChange=async(e)=>{
+
+    setUser({...user,[e.target.name]:e.target.value})
+
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,19 +33,23 @@ function SignUpFormPage() {
     setLoading(true); // Set loading state to true
 
     try {
-      const newUser = { name, email, password, _id: "32424" }; // Include name in the user object
-
-      dispatch(signUp(newUser));
+      axios.post('http://localhost:4000/api/user/register',user).then((res)=>{
+        console.log(res.data)
+        dispatch(signUp(user));
 
       setTimeout(() => {
         toast.success("User created successfully!");
         navigate("/");
       }, 1000);
-    } catch (error) {
-      setError(error.response ? error.response.data.message : error.message);
-      toast.error(
-        error.response ? error.response.data.message : "Signup failed."
-      ); // User feedback
+
+      }).catch((error)=>{
+        setError(error.response ? error.response.data.message : error.message);
+        toast.error(
+          error.response ? error.response.data.message : "Signup failed."
+        );
+      })
+
+      
     } finally {
       setLoading(false); // Reset loading state
     }
@@ -76,8 +89,9 @@ function SignUpFormPage() {
                     placeholder="Enter your Name"
                     aria-label="Name"
                     aria-describedby="name-addon"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={user.name}
+                    name="name"
+                    onChange={handleChange}
                     required
                   />
                 </InputGroup>
@@ -96,8 +110,9 @@ function SignUpFormPage() {
                     placeholder="Enter your E-mail"
                     aria-label="Email"
                     aria-describedby="email-addon"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={user.email}
+                    name="email"
+                    onChange={handleChange}
                     required
                   />
                 </InputGroup>
@@ -116,8 +131,9 @@ function SignUpFormPage() {
                     placeholder="Enter your Password"
                     aria-label="Password"
                     aria-describedby="password-addon"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={user.password}
+                    name="password"
+                    onChange={handleChange}
                     required
                   />
                 </InputGroup>

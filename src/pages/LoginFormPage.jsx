@@ -7,37 +7,47 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../features/AuthSlice";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 function LoginFormPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const handleChange=async(e)=>{
+
+    setUser({...user,[e.target.name]:e.target.value})
+
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     try {
-      // Simulating API call for login
-      // Replace this with  API call
-      const user = { email, password, _id: "32424" };
-      dispatch(login(user));
-      toast.success("Successfully logged in!");
+      axios.post('http://localhost:4000/api/user/login',user).then((res)=>{
+        dispatch(login(res.data.token));
+        toast.success("Successfully logged in!");
+  
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
 
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    } catch (err) {
-      setError("Failed to log in. Please check your credentials.");
-      toast.error("Login failed. Please try again.");
+      }).catch((error)=>{
+        setError(error.response ? error.response.data.message : error.message);
+        toast.error("Login failed. Please try again.");
+
+      })
+
+      
+    } finally {
+      setLoading(false); // Reset loading state
     }
-
-    setLoading(false);
   };
 
   return (
@@ -73,8 +83,9 @@ function LoginFormPage() {
                     placeholder="Enter your E-mail"
                     aria-label="Email"
                     aria-describedby="email-addon"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={user.email}
+                    name="email"
+                    onChange={handleChange}
                     required
                   />
                 </InputGroup>
@@ -92,8 +103,9 @@ function LoginFormPage() {
                     placeholder="Enter your Password"
                     aria-label="Password"
                     aria-describedby="password-addon"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={user.password}
+                    name="password"
+                    onChange={handleChange}
                     required
                   />
                 </InputGroup>
