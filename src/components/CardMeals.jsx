@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../features/CartSlice";
 import { addToWishlist } from "../features/WishListSlice";
 import toast from "react-hot-toast";
-// const background_image1 = require("../assets/burger.jpeg");
 
 function CardMelas({ product, name, description, price, photoName }) {
   const dispatch = useDispatch();
@@ -12,7 +11,7 @@ function CardMelas({ product, name, description, price, photoName }) {
   console.log(dispatch);
   return (
     <Card className="card-s">
-      <Card.Img variant="top" src={photoName} style={{ height: "150px" }} />
+      <Card.Img variant="top" src={`http://localhost:4000/images/${photoName}`} alt={photoName} style={{ height: "150px" }} />
       <Card.Body>
         <Card.Title className="card-t">
           {name}

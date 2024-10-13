@@ -11,7 +11,7 @@ const wishlistSlice = createSlice({
     addToWishlist(state, action) {
       const product = action.payload;
       const existingProduct = state.wishes.find(
-        (item) => item.id === product.id
+        (item) => item._id === product._id
       );
 
       if (!existingProduct) {
@@ -21,7 +21,7 @@ const wishlistSlice = createSlice({
     },
     removeFromWishlist(state, action) {
       const productId = action.payload;
-      state.wishes = state.wishes.filter((item) => item.id !== productId);
+      state.wishes = state.wishes.filter((item) => item._id !== productId);
 
       // Update localStorage
       localStorage.setItem("wishes", JSON.stringify(state.wishes));

@@ -21,18 +21,18 @@ function WishListPage() {
               <th>Product image</th>
               <th>Product Name</th>
               <th>Product Price</th>
-              <th colSpan={3} ></th>
+              <th colSpan={2} ></th>
               
             </tr>
           </thead>
           <tbody>
             {wishes.map((item, index) => (
-              <tr key={item.id}>
+              <> 
+              <tr key={item.id} >
                 <td className="text-center align-middle" >
                   <Card.Img
-                    style={{ width: "80px", height: "auto" }}
-                    src={item.photoName}
-                    alt={item.name}
+                    style={{ width: "60%", height: "auto"  }}
+                    src={`http://localhost:4000/images/${item.image}`} alt={item.image}
                   />
                 </td>
                 <td className="text-center align-middle">{item.name}</td>
@@ -47,12 +47,13 @@ function WishListPage() {
                   >
                     Add 
                   </button>
-                  {'  '}
+                  </td>
+                  <td>
                   <button
                     className="button-remove"
                     size="sm"
                     onClick={() =>{
-                      dispatch(removeFromWishlist(item.id))
+                      dispatch(removeFromWishlist(item._id))
 
                     }
                       
@@ -60,14 +61,20 @@ function WishListPage() {
                   >
                     x
                   </button>
-                  
 
-                    
-                
+                  </td>
                  
-                </td>
-              
+      
+                 
               </tr>
+              <tr>
+               <td className="divide" colSpan={5}>
+                 <div className="divider"></div>
+               </td>
+             </tr>
+               </>
+              
+              
             ))}
           </tbody>
         </Table>

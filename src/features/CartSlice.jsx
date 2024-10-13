@@ -10,10 +10,10 @@ const CartSlice = createSlice({
     addToCart(state, action) {
       const product = action.payload;
 
-      const existingProduct = state.cart.find((item) => item.id === product.id);
+      const existingProduct = state.cart.find((item) => item._id === product._id);
       if (existingProduct) {
         state.cart = state.cart.map((item) =>
-          item.id === product.id
+          item._id === product._id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -23,14 +23,14 @@ const CartSlice = createSlice({
       localStorage.setItem("cart", JSON.stringify(state.cart));
     },
     removeFromCart(state, action) {
-      const productID = action.payload.id;
-      state.cart = state.cart.filter((item) => item.id !== productID);
+      const productID = action.payload._id;
+      state.cart = state.cart.filter((item) => item._id !== productID);
       localStorage.setItem("cart", JSON.stringify(state.cart));
     },
     updateCartQuantity(state, action) {
-      const { id, quantity } = action.payload;
+      const { _id, quantity } = action.payload;
       state.cart = state.cart.map((item) =>
-        item.id === id ? { ...item, quantity } : item
+        item._id === _id ? { ...item, quantity } : item
       );
     },
     setCart(state, action) {

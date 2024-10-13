@@ -59,12 +59,13 @@ function CartPage() {
             )}
           </div>
 
-          {/* Only show the table if there are items in the cart */}
+          
           {cart.length > 0 ? (
-            <Table style={{ textAlign: "center" }} responsive="sm" bordered>
+            <Table style={{ textAlign: "center"}} responsive="sm" bordered>
               <thead>
                 <tr>
                   <th>Product</th>
+                  <th>Description</th>
                   <th>Price</th>
                   <th>Quantity</th>
                   <th>Total</th>
@@ -72,15 +73,15 @@ function CartPage() {
               </thead>
               <tbody>
                 {cart.map((product) => (
-                  <tr key={product.id}>
+                  <tr className="text-center align-middle" key={product.id}>
                     <td>
                       <img
-                        src={product.photoName}
-                        alt="food"
+                      src={`http://localhost:4000/images/${product.image}`} alt={product.image}
                         style={{ width: "100px", marginRight: "10px" }}
                       />
                       <strong>{product.name}</strong> <br />
                     </td>
+                    <td>{product.description}</td>
                     <td>{product.price} EGP</td>
                     <td>
                       <Button

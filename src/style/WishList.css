@@ -1,16 +1,22 @@
 .wishlist-table {
     width: 70%;
     margin: auto;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
     border-radius: 10px;
     overflow: hidden;
 
-
-
- 
+}
+tr{
+     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103) !important;
+     
+}
+td{
+    font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
 }
 .button-add{
+    font-family: 'Poppins', sans-serif; /* Make sure to import this if you choose it */
     width: 60px;
+    height: 50px;
     border: none !important;
     font-size: 20px;
     background-color:rgb(255, 208, 0);
@@ -19,7 +25,7 @@
     font-weight: 600;
     margin-top: 3px;
     color: rgb(17, 17, 17);
-    border-radius: 120px;
+    border-radius: 10px;
     border: none;
 
 }
@@ -29,7 +35,6 @@
 
 }
 .button-remove{
-    width: 20px;
     text-align: center;
     background-color: white;
     color: rgb(255, 208, 0);
@@ -39,4 +44,21 @@
 }
 .button-remove:hover{
     color: red;
+}
+.divider {
+    height: 5px;
+    background-color:#f1f3f6;; 
+    width: 100%;
+    
+}
+
+.table-borderless tbody tr {
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+
+}
+.divide{
+    padding: 0 !important;
+    box-shadow: none;
+    border:none !important
 }
