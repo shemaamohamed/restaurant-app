@@ -14,7 +14,6 @@ function CartPage() {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.cart ); // Cart holds item IDs and quantities
   const items = useSelector((state) => state.item.item); // Item slice for item details
-  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
@@ -40,7 +39,8 @@ function CartPage() {
     const product = items.find(item => item._id === itemId);
     return acc + (product ? product.price * quantity : 0);
   }, 0);
-
+  const user_login =localStorage.getItem('token')
+  
   const incrementQuantity = async (itemId) => {
     const item = { "itemId": itemId };
     await axios.post('http://localhost:4000/api/cart/add', item, {
@@ -81,16 +81,12 @@ function CartPage() {
     } 
   };
 
-  const handleDeleteAll = () => {
-    dispatch(setCart({})); 
-  };
 
   return (
     <Container>
-      <Row className="my-5">
-        <Col>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
-            <h3 className="mb-3 text-center text-md-center">Shopping Cart</h3>
+     
+          <div >
+            <h3 className=" text-center" style={{margin:'auto' ,padding:'10px'}}>Shopping Cart</h3>
             {/* {Object.keys(cart).length > 0 && (
               <Button variant="danger" onClick={handleDeleteAll}>
                 Delete All
@@ -99,28 +95,35 @@ function CartPage() {
           </div>
 
           {Object.keys(cart).length > 0 ? (
-            <Table style={{ textAlign: "center" }} responsive="sm" bordered>
+            <Table style={{ textAlign: "center" ,margin:"auto" ,width:'70%'  }}  responsive  bordered>
               <thead>
                 <tr>
-                  <th>Product</th>
-                  <th>Description</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Total</th>
+                <th style={{ width: '15%' }}>Product</th>
+                <th style={{ width: '20%' }}>Description</th> {/* Wider column for description */}
+                <th style={{ width: '10%' }}>Price</th>
+                <th style={{ width: '10%' }}>Quantity</th>
+                <th style={{ width: '10%' }}>Total</th>
                 </tr>
               </thead>
               <tbody>
                 {Object.entries(cart).map(([itemId, quantity]) => {
                   const product = items.find(item => item._id === itemId);
                   return product ? (
-                    <tr className="text-center align-middle" key={itemId}>
+                    <tr  className="text-center align-middle" key={itemId}>
                       <td>
-                        <img
+                        <Row >
+                          < Col>
+                          <img
                           src={`http://localhost:4000/images/${product.image}`}
                           alt={product.name}
-                          style={{ width: "100px", marginRight: "10px" }}
+                          style={{ width: "100%"}}
                         />
-                        <strong>{product.name}</strong><br />
+                          </Col>
+                        
+                        <strong  >{product.name}</strong><br />
+
+                        </Row>
+                        
                       </td>
                       <td>{product.description}</td>
                       <td>{product.price} EGP</td>
@@ -140,23 +143,22 @@ function CartPage() {
           ) : (
             <CartEmpty />
           )}
-        </Col>
-      </Row>
-      {Object.keys(cart).length > 0 && (
-        <Row className="justify-content-end">
-          <Col md={4}>
+        {Object.keys(cart).length > 0 && (
+        <Row className="justify-content-end" style={{marginBottom:'60px'}}>
+          <Col md={3}>
             <h4 className="text-end">Total price: {totalPrice} EGP</h4>
-            {!user ? (
+            {!user_login ? (
               <>
-                <Button variant="primary" className="w-100" disabled>Check Out</Button>
+                <Button variant="primary" className="w-20" disabled>Check Out</Button>
                 <p style={{ textAlign: "center", color: "red" }}>You need to log in first in order to checkout</p>
               </>
             ) : (
-              <Button onClick={() => navigate("/checkout")} variant="primary" className="w-100">Check Out</Button>
+              <Button onClick={() => navigate("/checkout")} variant="primary" className="w-100 ">Check Out</Button>
             )}
           </Col>
         </Row>
       )}
+      
     </Container>
   );
 }

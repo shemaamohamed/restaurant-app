@@ -2,13 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
 
-
+const initialState = {
+  item: JSON.parse(localStorage.getItem("item")) || [],
+};
 const ItemSlice = createSlice({
   name: "item",
-  initialState:
-  {
-    item: [] 
-  },
+  initialState,
   reducers: {
     addToItem(state,action){
         const item = action.payload;
@@ -18,6 +17,7 @@ const ItemSlice = createSlice({
         }else{
             state.item.push(item);
             toast.success("Item added successfully.");
+            localStorage.setItem("item", JSON.stringify(state.item));
 
         }
          
@@ -27,16 +27,22 @@ const ItemSlice = createSlice({
       const index = state.item.findIndex((item) => item.name === updatedItem.name);
       if (index !== -1) {
         state.item[index] = updatedItem;
+        localStorage.setItem("item", JSON.stringify(state.item));
+
       }
     },
     removeItem(state, action) {
       const itemName = action.payload;
       state.item = state.item.filter((item) => item.name !== itemName);
+      localStorage.setItem("item", JSON.stringify(state.item));
+
     },
    
 
     setItem(state, action) {
       state.item = action.payload;
+      localStorage.setItem("item", JSON.stringify(state.item));
+
     },
   },
 });

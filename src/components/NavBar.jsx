@@ -6,7 +6,6 @@ import "../style/NavBar.css";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/AuthSlice";
-import { FaUserCircle } from 'react-icons/fa';
 import Logo from "../assets/icon-food.svg"
 import Cart from "../assets/cart.svg"
 import Heart from "../assets/heart (2).svg"
@@ -16,6 +15,8 @@ import Profile from "../assets/userprofile.svg"
 function NavBar() {
   const cart = useSelector((state) => state.cart.cart);
   const wishes = useSelector((state) => state.wishlist.wishes || []);
+  const user_login =localStorage.getItem('token')
+
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -97,7 +98,7 @@ function NavBar() {
               </Badge>
             </Nav.Link>
             
-          {user ? (
+          {user_login ? (
               <NavDropdown
                 style={{ marginLeft: "40px" }}
                 title= {
@@ -114,7 +115,8 @@ function NavBar() {
                 }>
               
                 
-                <NavDropdown.Item onClick={handleLogout}>
+                <NavDropdown.Item onClick={()=>{
+                  handleLogout()}}>
                   Log out
                 </NavDropdown.Item>
               </NavDropdown>
