@@ -5,10 +5,39 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromWishlist } from "../features/WishListSlice";
 import toast from "react-hot-toast";
 import "../style/WishList.css";
+import axios from "axios";
 
 function WishListPage() {
   const wishes = useSelector((state) => state.wishlist.wishes || []);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
+
+ 
+
+  const addtocart= async(itemm)=>{
+    const item = {
+      "itemId": itemm._id
+     
+    };
+    console.log(item)
+    console.log(token)
+    await axios.post('http://localhost:4000/api/cart/add',
+      item,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token,
+        },
+      }
+    ).then((res)=>{
+      console.log(res.data)
+      toast.success("Added to Cart")
+      dispatch(addToCart(item));
+    }).catch((err)=>{
+      console.log(err)
+    })
+    
+  }
 
   return (
     <Container className="mt-4">
@@ -40,10 +69,7 @@ function WishListPage() {
                 <td className="align-middle text-center">
                     <button
                     className="button-add"
-                    onClick={() => {
-                      dispatch(addToCart(item));
-                      toast.success("Added to cart");
-                    }}
+                    onClick={()=>{addtocart(item)}}
                   >
                     Add 
                   </button>

@@ -5,11 +5,11 @@
     overflow: hidden;
 
 }
-tr{
+.wishlist-table tr{
      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103) !important;
      
 }
-td{
+.wishlist-table td{
     font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }

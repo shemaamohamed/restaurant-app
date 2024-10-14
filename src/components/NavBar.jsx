@@ -18,11 +18,10 @@ function NavBar() {
   const wishes = useSelector((state) => state.wishlist.wishes || []);
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
-  console.log(user);
   const handleLogout = () => {
     dispatch(logout());
   };
-  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+  // const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
   return (
     <Navbar
       expand="lg"
@@ -77,7 +76,7 @@ function NavBar() {
                 pill
                 bg="danger"
               >
-                {totalQuantity}
+                {/* {totalQuantity} */}
               </Badge>
             </Nav.Link>
             <Nav.Link as={Link} to="/wishlist">

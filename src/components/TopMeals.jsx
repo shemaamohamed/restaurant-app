@@ -4,15 +4,19 @@ import Row from "react-bootstrap/Row";
 import "../style/TopMeals.css";
 import CardMelas from "./CardMeals";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setItem } from "../features/ItemSlice";
 
 function TopMeals() {
-  const [menuItems, setMenuItems] = useState([]);
-
+  const dispatch = useDispatch();
+  const menuItems = useSelector((state) => state.item.item || []);
   useEffect(() => {
     axios.get('http://localhost:4000/api/food/list') 
       .then(response =>{
-        setMenuItems(response.data.data)})
+        dispatch(setItem(response.data.data))
+      })
+        
       .catch(error => console.error('Error fetching menu items:', error));
   }, []);
   return (

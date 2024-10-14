@@ -31,7 +31,8 @@ function LoginFormPage() {
     setLoading(true);
     try {
       axios.post('http://localhost:4000/api/user/login',user).then((res)=>{
-        dispatch(login(res.data.token));
+        console.log(res.data);
+        dispatch(login(res.data));
         toast.success("Successfully logged in!");
   
         setTimeout(() => {

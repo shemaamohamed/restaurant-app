@@ -4,9 +4,37 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../features/CartSlice";
 import { addToWishlist } from "../features/WishListSlice";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 function CardMelas({ product, name, description, price, photoName }) {
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
+
+  const item = {
+    "itemId": product._id
+   
+  };
+
+  const addtocart= async()=>{
+    console.log(item)
+    console.log(token)
+    await axios.post('http://localhost:4000/api/cart/add',
+      item,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token,
+        },
+      }
+    ).then((res)=>{
+      console.log(res.data)
+      toast.success("Added to Cart")
+      dispatch(addToCart(product._id));
+    }).catch((err)=>{
+      toast.error('Login to add to Cart')
+    })
+    
+  }
 
  
   return (
@@ -35,8 +63,8 @@ function CardMelas({ product, name, description, price, photoName }) {
         </Card.Text>
 
         <button
-          onClick={() =>
-            dispatch(addToCart(product), toast.success("Added to cart"))
+          onClick={
+            addtocart
           }
           className="CartBtn"
         >

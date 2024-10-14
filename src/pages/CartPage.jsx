@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,60 +8,98 @@ import {
 } from "../features/CartSlice";
 import { useNavigate } from "react-router-dom";
 import CartEmpty from "../components/CartEmpty";
+import axios from "axios";
 
 function CartPage() {
   const navigate = useNavigate();
-  const cart = useSelector((state) => state.cart.cart);
+  const cart = useSelector((state) => state.cart.cart ); // Cart holds item IDs and quantities
+  const items = useSelector((state) => state.item.item); // Item slice for item details
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
-  const totalPrice = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  useEffect(() => {
+   const intervalId = setInterval(()=>{
+      axios.get('http://localhost:4000/api/cart/get', {
+        headers: {
+          'token': token,
+        },
+      }).then(response => {
+        dispatch(setCart(response.data.cartData)); // Set the cart data in Redux
+  
+      }).catch(error => console.error('Error fetching cart data:', error));
 
-  function incrementQuantity(product) {
-    dispatch(
-      updateCartQuantity({ id: product.id, quantity: product.quantity + 1 })
-    );
-  }
+    },1000)
+    return () => {
+      clearInterval(intervalId);
+    };
+    
+  }, [dispatch]);
 
-  function decrementQuantity(product) {
-    if (product.quantity > 1) {
-      dispatch(
-        updateCartQuantity({ id: product.id, quantity: product.quantity - 1 })
-      );
-    } else {
-      dispatch(removeFromCart(product));
-    }
-  }
+  const totalPrice = Object.entries(cart).reduce((acc, [itemId, quantity]) => {
+    const product = items.find(item => item._id === itemId);
+    return acc + (product ? product.price * quantity : 0);
+  }, 0);
 
-  function handleDeleteAll() {
-    dispatch(setCart([]));
-  }
+  const incrementQuantity = async (itemId) => {
+    const item = { "itemId": itemId };
+    await axios.post('http://localhost:4000/api/cart/add', item, {
+      headers: {
+        'Content-Type': 'application/json',
+        'token': token,
+      },
+    }).then(() => {
+      dispatch(updateCartQuantity({ itemId, quantity: cart[itemId] + 1 }));
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const decrementQuantity = async (itemId) => {
+    const item = { "itemId": itemId };
+    if (cart[itemId] >= 1) {
+      await axios.delete('http://localhost:4000/api/cart/remove', 
+        {
+          data: item, // Pass item as data
+          headers: {
+            'Content-Type': 'application/json',
+            'token': token,
+          },
+        }
+        
+      ).then(() => {
+        if(cart[itemId] === 1){
+          console.log("Item removed from cart successfully");
+          dispatch(removeFromCart(itemId));
+        }
+        else{
+          dispatch(updateCartQuantity({ itemId, quantity: cart[itemId] - 1 }));
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+    } 
+  };
+
+  const handleDeleteAll = () => {
+    dispatch(setCart({})); 
+  };
 
   return (
     <Container>
       <Row className="my-5">
         <Col>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: "20px",
-            }}
-          >
-            <h3  className="mb-3 text-center text-md-center">Shopping Cart</h3>
-            {cart.length > 0 && (
-              <Button variant="danger" onClick={() => handleDeleteAll()}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px" }}>
+            <h3 className="mb-3 text-center text-md-center">Shopping Cart</h3>
+            {/* {Object.keys(cart).length > 0 && (
+              <Button variant="danger" onClick={handleDeleteAll}>
                 Delete All
               </Button>
-            )}
+            )} */}
           </div>
 
-          
-          {cart.length > 0 ? (
-            <Table style={{ textAlign: "center"}} responsive="sm" bordered>
+          {Object.keys(cart).length > 0 ? (
+            <Table style={{ textAlign: "center" }} responsive="sm" bordered>
               <thead>
                 <tr>
                   <th>Product</th>
@@ -72,45 +110,31 @@ function CartPage() {
                 </tr>
               </thead>
               <tbody>
-                {cart.map((product) => (
-                  <tr className="text-center align-middle" key={product.id}>
-                    <td>
-                      <img
-                      src={`http://localhost:4000/images/${product.image}`} alt={product.image}
-                        style={{ width: "100px", marginRight: "10px" }}
-                      />
-                      <strong>{product.name}</strong> <br />
-                    </td>
-                    <td>{product.description}</td>
-                    <td>{product.price} EGP</td>
-                    <td>
-                      <Button
-                        onClick={() => decrementQuantity(product)}
-                        variant="light"
-                        size="sm"
-                      >
-                        -
-                      </Button>
-                      <span className="mx-2">{product.quantity}</span>
-                      <Button
-                        onClick={() => incrementQuantity(product)}
-                        variant="light"
-                        size="sm"
-                      >
-                        +
-                      </Button>
-                      {'  '}
-                      <Button
-                        variant="outline-danger"
-                        className="ml-3"
-                        onClick={() => dispatch(removeFromCart(product))}
-                      >
-                        X
-                      </Button>
-                    </td>
-                    <td>{product.price * product.quantity} EGP</td>
-                  </tr>
-                ))}
+                {Object.entries(cart).map(([itemId, quantity]) => {
+                  const product = items.find(item => item._id === itemId);
+                  return product ? (
+                    <tr className="text-center align-middle" key={itemId}>
+                      <td>
+                        <img
+                          src={`http://localhost:4000/images/${product.image}`}
+                          alt={product.name}
+                          style={{ width: "100px", marginRight: "10px" }}
+                        />
+                        <strong>{product.name}</strong><br />
+                      </td>
+                      <td>{product.description}</td>
+                      <td>{product.price} EGP</td>
+                      <td>
+                        <Button onClick={() => decrementQuantity(itemId)} variant="light" size="sm">-</Button>
+                        <span className="mx-2">{quantity}</span>
+                        <Button onClick={() => incrementQuantity(itemId)} variant="light" size="sm">+</Button>
+                        {' '}
+                        {/* <Button variant="outline-danger" className="ml-3" onClick={() => dispatch(removeFromCart(itemId))}>X</Button> */}
+                      </td>
+                      <td>{product.price * quantity} EGP</td>
+                    </tr>
+                  ) : null; // Handle case if product not found
+                })}
               </tbody>
             </Table>
           ) : (
@@ -118,27 +142,17 @@ function CartPage() {
           )}
         </Col>
       </Row>
-      {cart.length > 0 && (
+      {Object.keys(cart).length > 0 && (
         <Row className="justify-content-end">
           <Col md={4}>
             <h4 className="text-end">Total price: {totalPrice} EGP</h4>
             {!user ? (
               <>
-                <Button variant="primary" className="w-100" disabled>
-                  Check Out
-                </Button>
-                <p style={{ textAlign: "center", color: "red" }}>
-                  You need to log in first in order to checkout
-                </p>
+                <Button variant="primary" className="w-100" disabled>Check Out</Button>
+                <p style={{ textAlign: "center", color: "red" }}>You need to log in first in order to checkout</p>
               </>
             ) : (
-              <Button
-                onClick={() => navigate("/checkout")}
-                variant="primary"
-                className="w-100"
-              >
-                Check Out
-              </Button>
+              <Button onClick={() => navigate("/checkout")} variant="primary" className="w-100">Check Out</Button>
             )}
           </Col>
         </Row>
