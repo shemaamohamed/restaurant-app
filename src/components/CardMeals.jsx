@@ -9,6 +9,8 @@ import axios from "axios";
 function CardMelas({ product, name, description, price, photoName }) {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
+  const user_login =localStorage.getItem('token')
+
 
   const item = {
     "itemId": product._id
@@ -30,8 +32,18 @@ function CardMelas({ product, name, description, price, photoName }) {
       console.log(res.data)
       toast.success("Added to Cart")
       dispatch(addToCart(product._id));
+   
+
     }).catch((err)=>{
-      toast.error('Login to add to Cart')
+      toast('Please Login to add your order', {
+        icon: '🔒',  
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      })
+
     })
     
   }

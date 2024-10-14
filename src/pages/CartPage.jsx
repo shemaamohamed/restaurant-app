@@ -18,22 +18,28 @@ function CartPage() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-   const intervalId = setInterval(()=>{
-      axios.get('http://localhost:4000/api/cart/get', {
-        headers: {
-          'token': token,
-        },
-      }).then(response => {
-        dispatch(setCart(response.data.cartData)); // Set the cart data in Redux
-  
-      }).catch(error => console.error('Error fetching cart data:', error));
-
-    },1000)
-    return () => {
-      clearInterval(intervalId);
-    };
+    if(token){
+      const intervalId = setInterval(()=>{
+        axios.get('http://localhost:4000/api/cart/get', {
+          headers: {
+            'token': token,
+          },
+        }).then(response => {
+          dispatch(setCart(response.data.cartData)); // Set the cart data in Redux
     
-  }, [dispatch]);
+        }).catch(error => console.error('Error fetching cart data:', error));
+  
+      },1000)
+      return () => {
+        clearInterval(intervalId);
+      };
+      
+
+    }else{
+      dispatch(setCart([]))
+    }
+   
+  }, [dispatch ,token]);
 
   const totalPrice = Object.entries(cart).reduce((acc, [itemId, quantity]) => {
     const product = items.find(item => item._id === itemId);
@@ -83,10 +89,10 @@ function CartPage() {
 
 
   return (
-    <Container>
+    <Container style={{marginTop:'50px'}}>
      
           <div >
-            <h3 className=" text-center" style={{margin:'auto' ,padding:'10px'}}>Shopping Cart</h3>
+            <h3  style={{margin:'auto' ,padding:'10px'}}>Shopping Cart</h3>
             {/* {Object.keys(cart).length > 0 && (
               <Button variant="danger" onClick={handleDeleteAll}>
                 Delete All

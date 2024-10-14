@@ -10,17 +10,20 @@ import Logo from "../assets/icon-food.svg"
 import Cart from "../assets/cart.svg"
 import Heart from "../assets/heart (2).svg"
 import Profile from "../assets/userprofile.svg"
+import { setCart } from "../features/CartSlice";
+import { setItem } from "../features/ItemSlice";
 
 
 function NavBar() {
   const cart = useSelector((state) => state.cart.cart);
   const wishes = useSelector((state) => state.wishlist.wishes || []);
   const user_login =localStorage.getItem('token')
+  const totalQuantity = Object.entries(cart).reduce((total,[itemId, quantity]) => total + quantity, 0);
 
-  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(setCart([]));
   };
   // const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
   return (
@@ -73,11 +76,11 @@ function NavBar() {
                 alt="Cart"
              />
               <Badge
-                style={{ position: "relative", bottom: "5px", left: "3px" ,width:'20px' ,height:'20px'}}
+                style={{ position: "relative", bottom: "5px", left: "3px" ,width:'30px' ,height:'20px'}}
                 pill
                 bg="danger"
               >
-                {/* {totalQuantity} */}
+                {totalQuantity}
               </Badge>
             </Nav.Link>
             <Nav.Link as={Link} to="/wishlist">
@@ -90,7 +93,7 @@ function NavBar() {
                 alt="Heart"
              />
               <Badge
-                style={{ position: "relative", bottom: "5px", left: "5px",width:'20px' ,height:'20px' }}
+                style={{ position: "relative", bottom: "5px", left: "5px",width:'30px' ,height:'20px' }}
                 pill
                 bg="danger"
               >

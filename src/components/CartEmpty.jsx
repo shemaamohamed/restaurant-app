@@ -9,7 +9,7 @@ function CartEmpty() {
     width: "100%",
     height: "50%",
     margin: "auto",
-    marginTop: "100px",
+    marginTop: "200px",
   };
   return (
     <Container style={{height:'70vh',alignItems:'center',display:'flex',justifyContent:'center',flexDirection:'column'}}>

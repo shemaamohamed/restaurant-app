@@ -7,16 +7,15 @@ const CartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
-      const product = action.payload;
-      const existingProduct = state.cart.find((item) => item._id === product._id);
-      if (existingProduct) {
-        state.cart = state.cart.map((item) =>
-          item._id === product._id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
+      const productid = action.payload;
+      
+      if (!state.cart[productid]) {
+        state.cart[productid]=1;
+        
       } else {
-        state.cart.push({ ...product, quantity: 1 });
+    
+        state.cart[productid] += 1
+        
       }
       localStorage.setItem("cart", JSON.stringify(state.cart));
     },
