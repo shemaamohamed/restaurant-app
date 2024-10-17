@@ -58,12 +58,12 @@
     background-color: red;
     color:white
   }
-  input {
+  .checkout-form input {
     border: 1px solid #ced4da !important; /* Light gray border */
     border-radius: 10px !important; /* Slightly rounded corners */
     padding: 10px !important; 
     width: 100% !important; }
-    input:focus {
+   .checkout-form input:focus {
       border-color: rgb(255, 208, 0) !important;
       outline: none !important; /* Remove default outline */
       box-shadow: 0 0 5px rgb(226, 210, 139) !important; /* Subtle blue shadow */

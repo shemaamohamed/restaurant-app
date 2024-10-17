@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
+    type:{
+        type:String,
+        default:"user",
+    },
     cartData: { 
         type: Object, 
         default: {} 

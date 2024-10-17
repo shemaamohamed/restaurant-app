@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import validator from 'validator';
 import userModel from "../models/userModel.js";
 
-// Utility function to create a JWT token
 const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1d' }); // Set expiration for better security
 };
@@ -26,8 +25,9 @@ const loginUser = async (req, res) => {
         }
 
         // Generate token and respond with success
-        const token = createToken(user._id);
-        return res.status(200).json({ success: true, token });
+        const { _id, type } = user; 
+        const token = createToken(_id);
+        return res.status(200).json({ success: true, token , type });
 
     } catch (error) {
         console.error("Login Error:", error);
@@ -37,7 +37,7 @@ const loginUser = async (req, res) => {
 
 // Register user controller
 const registerUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password ,type} = req.body;
 
     try {
         // Check if the user already exists
@@ -63,7 +63,8 @@ const registerUser = async (req, res) => {
         const newUser = new userModel({
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            type:type || "user"
         });
 
         // Save user to the database

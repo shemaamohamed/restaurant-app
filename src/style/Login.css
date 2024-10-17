@@ -20,6 +20,11 @@
     font-size: 48px;
     font-weight: 700;
 }
+ input:focus {
+    border-color: rgb(255, 208, 0) !important;
+    outline: none !important; /* Remove default outline */
+    box-shadow: 0 0 5px rgb(226, 210, 139) !important; /* Subtle blue shadow */
+  }
 
 .underline{
     width: 61px;

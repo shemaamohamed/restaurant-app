@@ -26,8 +26,9 @@ function ProductListPage() {
   // console.log(item);
   useEffect(()=>{
     const fetchItems= async()=>{
-     await axios.get('http://localhost:8000/product')
+     await axios.get('http://localhost:4000/api/food/list')
       .then(response => {
+        console.log(response.data);
         dispatch(setItem(response.data));
         // console.log(response.data);
         setLoading(false);

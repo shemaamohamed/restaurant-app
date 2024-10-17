@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import { Badge, Navbar } from "react-bootstrap";
 import { NavDropdown } from "react-bootstrap";
 import "../style/NavBar.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/AuthSlice";
 import Logo from "../assets/icon-food.svg"
@@ -16,6 +16,7 @@ import { setItem } from "../features/ItemSlice";
 
 function NavBar() {
   const cart = useSelector((state) => state.cart.cart);
+  const navigate =useNavigate();
   const wishes = useSelector((state) => state.wishlist.wishes || []);
   const user_login =localStorage.getItem('token')
   const totalQuantity = Object.entries(cart).reduce((total,[itemId, quantity]) => total + quantity, 0);
@@ -24,6 +25,8 @@ function NavBar() {
   const handleLogout = () => {
     dispatch(logout());
     dispatch(setCart([]));
+    navigate('/')
+
   };
   // const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
   return (
