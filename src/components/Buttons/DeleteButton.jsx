@@ -6,20 +6,22 @@ import"../../style/Button.css"
 import { useState } from "react";
 // import { removeItem } from "../../features/ItemSlice";
 import toast from "react-hot-toast";
-function DeleteButton({name}) {
+function DeleteButton({name,id}) {
   // const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
   const handleDelete =async () => {
     try{
-      const response = await axios.get('http://localhost:8000/product');
-      const Items = response.data;
-      const itemToDelete = Items.find(item => item.name === name);
-      console.log(itemToDelete);
-      console.log(`Deleting item ${name}`);
-      axios.delete(`http://localhost:8000/product/${itemToDelete.id}`)
+      axios.delete(`http://localhost:4000/api/food/remove`,
+        {
+          data: {
+            id: id
+          }
+        }
+
+      )
       .then(response => {
-        // dispatch(removeItem(name)); // Dispatch the delete action
+        
         toast.success("Item deleted successfully");
         setShowModal(false); 
         

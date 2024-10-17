@@ -151,9 +151,9 @@ function SignUpFormPage() {
                     {loading ? "Signing Up..." : "Sign Up"}{" "}
                     {/* Button text changes based on loading state */}
                   </Button>
-                  <Button className="submit" onClick={() => navigate("/login")}>
+                  <button className="submit" onClick={() => navigate("/login")}>
                     Login
-                  </Button>
+                  </button>
                 </div>
               </div>
             </Form.Group>

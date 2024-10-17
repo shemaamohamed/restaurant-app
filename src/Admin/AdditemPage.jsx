@@ -13,20 +13,21 @@ function AdditemPage() {
     name: "",
     description: "",
     price: "",
-    discount: "",
     photoName: "",
+    category: "",
   });
 
-  const [errors, setErrors] = useState({}); // State for error messages
+  const [errors, setErrors] = useState({}); 
 
   const handleChange = (e) => {
     setItem({ ...item, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" }); // Clear error when user types
+    setErrors({ ...errors, [e.target.name]: "" }); 
   };
 
   const handleImageUpload = (file) => {
     setItem({ ...item, photoName: file });
-    setErrors({ ...errors, photoName: "" }); // Clear error when image is uploaded
+    console.log("Uploaded file:", file);
+    setErrors({ ...errors, photoName: "" }); 
   };
 
   const validate = () => {
@@ -39,6 +40,7 @@ function AdditemPage() {
     if (item.discount && (isNaN(item.discount) || item.discount < 0))
       newErrors.discount = "Discount should be a positive number";
     if (!item.photoName) newErrors.photoName = "Image is required";
+    if (!item.category) newErrors.category = "Category is required";
     return newErrors;
   };
 
@@ -52,12 +54,31 @@ function AdditemPage() {
     }
 
     try {
-      await axios.post("http://localhost:8000/product", item, {
-        headers: { "Content-Type": "application/json" },
-      });
-      toast.success("Product added successfully");
-      navigate("/productlist");
-    } catch (error) {
+      console.log('kkkk')
+      const formData = new FormData();
+      formData.append("name", item.name);
+      formData.append("description", item.description);
+      formData.append("price", item.price);
+      formData.append("category", item.category);
+      formData.append("image", item.photoName);
+      
+      console.log(formData)
+      await axios.post("http://localhost:4000/api/food/add",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          }
+        }
+      ).then((res) => {
+        toast.success("Product added successfully");
+        navigate("/productlist");
+      }).catch((err) => {
+        console.log(err);
+        toast.error(err);
+      }); 
+    }
+    catch (error) {
       toast.error("Error adding product");
     }
   };
@@ -120,21 +141,22 @@ function AdditemPage() {
                   {errors.price}
                 </Form.Control.Feedback>
               </Form.Group>
-
-              <Form.Group controlId="formItemDiscount" className="mb-3">
-                <Form.Label>Discount</Form.Label>
+              <Form.Group controlId="formItemCategory" className="mb-3">
+                <Form.Label>Category Item</Form.Label>
                 <Form.Control
-                  type="number"
-                  placeholder="Enter Discount of item"
-                  value={item.discount}
+                  type="text"
+                  placeholder="Enter Price of item"
+                  value={item.category}
                   onChange={handleChange}
-                  name="discount"
-                  isInvalid={!!errors.discount}
+                  name="category"
+                  isInvalid={!!errors.category}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.discount}
+                  {errors.category}
                 </Form.Control.Feedback>
               </Form.Group>
+
+              
             </Col>
 
             <Col md={6} xs={12} className="mb-3">

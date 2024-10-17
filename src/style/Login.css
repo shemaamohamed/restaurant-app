@@ -96,7 +96,9 @@
 }
 .submit:hover{
     background-color: #797979;
+    color: white;
 }
+
 
 .gray{
     background:#eaeaea ;

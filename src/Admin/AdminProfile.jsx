@@ -9,14 +9,24 @@ import {
   Stack,
   Grid2,
 } from "@mui/material";
+import { logout } from "../features/AuthSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function AdminProfile() {
+  const navigate= useNavigate();
   const adminData = {
     name: "John Doe",
     email: "johndoe@example.com",
     phone: "+123456789",
     profileImage: "https://via.placeholder.com/150", // Placeholder image
     bio: "Admin with extensive experience in managing teams and projects.",
+  };
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/')
+
   };
 
   return (
@@ -45,7 +55,8 @@ function AdminProfile() {
                   <Button variant="contained" color="primary">
                     Edit Profile
                   </Button>
-                  <Button variant="outlined" color="secondary">
+                  <Button onClick={()=>{
+                  handleLogout()}} variant="outlined" color="secondary">
                     Logout
                   </Button>
                 </Stack>

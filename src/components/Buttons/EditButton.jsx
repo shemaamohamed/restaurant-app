@@ -2,7 +2,7 @@
 import { useState } from "react";
 import"../../style/Button.css"
 import UpdateitemPage from "../../Admin/UpdateitemPage";
-function EditButton({name ,id}) {
+function EditButton({name,category,description,image,price ,id}) {
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -21,6 +21,9 @@ function EditButton({name ,id}) {
     show={showModal}
     onHide={handleCloseModal}
     onConfirm={handleCloseModal}
+    category={category}
+    description={description}
+    price={price}
     itemName={name}
     id={id}
 

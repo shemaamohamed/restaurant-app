@@ -120,19 +120,19 @@ function LoginFormPage() {
                 </div>
 
                 <div className="submit-container">
-                  <Button
+                  <button
                     className="submit gray"
                     type="submit"
                     disabled={loading}
                   >
                     {loading ? "Logging in..." : "Log in"}
-                  </Button>
-                  <Button
+                  </button>
+                  <button
                     className="submit"
                     onClick={() => navigate("/signup")}
                   >
                     Sign up
-                  </Button>
+                  </button>
                 </div>
               </div>
             </Form.Group>

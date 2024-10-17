@@ -23,14 +23,11 @@ function ProductListPage() {
   const [error, setError] = useState(null);
 
   const item = useSelector((state) => state.item.item);
-  // console.log(item);
   useEffect(()=>{
     const fetchItems= async()=>{
      await axios.get('http://localhost:4000/api/food/list')
       .then(response => {
-        console.log(response.data);
-        dispatch(setItem(response.data));
-        // console.log(response.data);
+        dispatch(setItem(response.data.data));
         setLoading(false);
 
       }).catch(error=>{
@@ -80,9 +77,9 @@ function ProductListPage() {
             <th>#</th>
             <th>Image</th>
             <th>Name</th>
+            <th>Category</th>
             <th>Description</th>
             <th>Price</th>
-            <th>Discount</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -92,21 +89,19 @@ function ProductListPage() {
               <td>{index+1}</td>
               <td>
               <img 
-                  src={item.photoName }
+                  src={`http://localhost:4000/images/${item.image}`}
                   alt={item.name} 
-                  width="50" 
-                  // onError={(e) => { e.target.src = require('../../assets/B-meduim1.jpg'); }} 
+                  width="80" 
                 />
               </td>
               <td>{item.name}</td>
+              <td>{item.category}</td>
               <td>{item.description}</td>
               <td>{item.price} EGP</td>
               <td>
-              {item.discount ? `${item.discount}%` : 'No discount'}</td>
-              <td>
                 <Stack direction="horizontal" gap={3}>
-                  <EditButton name={item.name} id={item.id}/>
-                  <DeleteButton name={item.name} id={item.id}/>
+                  <EditButton name={item.name} category={item.category} description={item.description} image={item.image} price={item.price} id={item._id}/>
+                  <DeleteButton name={item.name} id={item._id}/>
                 </Stack>
               </td>
             </tr>
