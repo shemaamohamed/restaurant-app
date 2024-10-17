@@ -61,40 +61,37 @@ const fetchUserOrders =async () => {
 
   return (
     <Container style={{ marginTop: '50px' }}>
-      <Row>
-        <Col md={8} className="checkout-form">
+      <Row className="justify-content-between">
+        <Col md={7} className="checkout-form ">
           <h3>Checkout</h3>
           <Form onSubmit={handlePlaceOrder}>
             <Row>
               <Col>
-                <Form.Group controlId="formFirstName">
+                <Form.Group controlId="formFirstName" className="mb-3">
                   <Form.Label>First Name</Form.Label>
                   <Form.Control type="text" placeholder="Enter your first name" required defaultValue={user?.firstName} />
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="formLastName">
+                <Form.Group controlId="formLastName" className="mb-3">
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control type="text" placeholder="Enter your last name" required defaultValue={user?.lastName} />
                 </Form.Group>
               </Col>
             </Row>
-
-            <h2>Delivery Address</h2>
-            <Form.Group controlId="formStreetAddress">
+            <Form.Group controlId="formStreetAddress" className="mb-3">
               <Form.Label>Street Address</Form.Label>
               <Form.Control type="text" placeholder="Enter your street address" required />
             </Form.Group>
-            <Form.Group controlId="formFloor">
+            <Form.Group controlId="formFloor" className="mb-3">
               <Form.Label>Floor (Optional)</Form.Label>
               <Form.Control type="text" placeholder="Enter your floor" />
             </Form.Group>
-            <Form.Group controlId="formCity">
+            <Form.Group controlId="formCity" className="mb-3">
               <Form.Label>City</Form.Label>
               <Form.Control type="text" placeholder="Enter your city" required />
             </Form.Group>
 
-            <h2>Contact Information</h2>
             <Row>
               <Col>
                 <Form.Group controlId="formEmail">
@@ -110,30 +107,23 @@ const fetchUserOrders =async () => {
               </Col>
             </Row>
 
-            <Button variant="primary" type="submit" className="place-order-button">
+            <Button  type="submit" className="place-order-button">
               Place Order
             </Button>
           </Form>
         </Col>
 
-        <Col md={4} className="order-summary">
+        <Col  md={4} className="order-summary h-100">
           <h3>Order Summary</h3>
           {Object.keys(cart).length > 0 ? (
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                </tr>
-              </thead>
+            <Table  borderless  responsive >
+             
               <tbody>
                 {Object.entries(cart).map(([itemId, quantity]) => {
                   const product = items.find(item => item._id === itemId);
                   return product ? (
                     <tr key={itemId}>
-                      <td>{product.name}</td>
-                      <td>{quantity}</td>
+                      <td>{quantity }{' '}x{' '}{ product.name}</td>
                       <td>{(product.price * quantity).toFixed(2)} EGP</td>
                     </tr>
                   ) : null;
@@ -143,7 +133,7 @@ const fetchUserOrders =async () => {
           ) : (
             <CartEmpty />
           )}
-          <h5>Total Price: {totalPrice.toFixed(2)} EGP</h5>
+          <h6>Total Price: {totalPrice.toFixed(2)} EGP</h6>
           <h4>User Orders</h4>
           {userOrders.length > 0 ? (
             <Table striped bordered hover responsive>
