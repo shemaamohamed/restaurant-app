@@ -1,25 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
     const initialState = {
-        trackedOrdered: Array.isArray(JSON.parse(localStorage.getItem("ordered-products"))) 
-            ? JSON.parse(localStorage.getItem("ordered-products")) 
+        trackedOrdered: Array.isArray(JSON.parse(localStorage.getItem("orders"))) 
+            ? JSON.parse(localStorage.getItem("orders")) 
             : [],
     };
     
 let count =  1 ; 
 const OrderSlice = createSlice({
-    name: "ordered-products",
+    name: "orders",
     initialState,
     reducers: {
         addToOrdered(state, action) {
             const ordered = action.payload;
             state.trackedOrdered.push({ ...ordered, quantity: 1 ,soldOut:null , deliverDays : 3,orderId : ++count});
-            localStorage.setItem("ordered-products", JSON.stringify(state.trackedOrdered));
+            localStorage.setItem("orders", JSON.stringify(state.trackedOrdered));
         },
         deliveredOrder(state, action) {
             const orderedProductId = action.payload.id;
             state.trackedOrdered = state.trackedOrdered.filter((item) => item.id !== orderedProductId);
-            localStorage.setItem("ordered-products", JSON.stringify(state.trackedOrdered));
+            localStorage.setItem("orders", JSON.stringify(state.trackedOrdered));
         },
         logOrderedItems(state) {
             console.log("Tracked Ordered Items:", JSON.stringify(state.trackedOrdered));

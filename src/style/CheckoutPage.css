@@ -1,0 +1,48 @@
+.checkout-form {
+    background-color: rgb(234, 234, 4) ;
+    color: black ;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .checkout-summary {
+    background-color: black;
+    color: yellow;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .order-summary {
+    background-color: black;
+    color: yellow;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .order-summary h3, .checkout-form h3 {
+    text-align: center;
+  }
+  
+  .order-item {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid yellow;
+    border-radius: 4px;
+  }
+  
+  .order-item h5 {
+    margin: 0;
+    color: yellow;
+  }
+  
+  .order-item p {
+    margin: 0;
+    color: #ddd; 
+  }
+  .place-order-button {
+    float: right; /* Aligns the button to the bottom right */
+    margin-top: 20px;
+  }
