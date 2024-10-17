@@ -38,6 +38,49 @@ const listFood = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 };
+const editFood = async (req, res) => {
+    const { id, name, description, price, category } = req.body;
+
+    if (!id || !name || !description || !price || !category) {
+        return res.status(400).json({ success: false, message: "ID, name, description, price, and category are required" });
+    }
+
+    try {
+        // Find the food item by ID
+        const food = await foodModel.findById(id);
+        if (!food) {
+            return res.status(404).json({ success: false, message: "Food Not Found" });
+        }
+
+        // Update the fields
+        food.name = name;
+        food.description = description;
+        food.price = price;
+        food.category = category;
+
+        // Check if a new image file is uploaded
+        if (req.file) {
+            // Remove the old image file if it exists
+            if (food.image) {
+                try {
+                    await fs.unlink(`uploads/${food.image}`);
+                } catch (fileError) {
+                    console.error(`Failed to delete old image file: ${fileError.message}`);
+                }
+            }
+            
+            // Set the new image file name
+            food.image = req.file.filename;
+        }
+
+        // Save the updated food item
+        await food.save();
+        res.status(200).json({ success: true, message: "Food Updated Successfully", data: food });
+    } catch (error) {
+        console.error("Error updating food:", error);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+};
 
 // Remove food item
 const removeFood = async (req, res) => {
@@ -70,4 +113,4 @@ const removeFood = async (req, res) => {
     }
 };
 
-export { addFood, listFood, removeFood };
+export { addFood, listFood, removeFood,editFood };
