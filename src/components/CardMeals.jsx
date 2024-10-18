@@ -70,8 +70,8 @@ function CardMelas({ product, name, description, price, photoName }) {
         <Card.Text style={{ height: "50px" }}>{description}</Card.Text>
         <Card.Text className="card-text">
           Price: {price} EGP
-          <hr />
-          <del>Price: 250.00 EGP</del>
+          {/* <hr /> */}
+          {/* <del>Price: 250.00 EGP</del> */}
         </Card.Text>
 
         <button

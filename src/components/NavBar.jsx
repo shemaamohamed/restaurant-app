@@ -11,7 +11,6 @@ import Cart from "../assets/cart.svg"
 import Heart from "../assets/heart (2).svg"
 import Profile from "../assets/userprofile.svg"
 import { setCart } from "../features/CartSlice";
-import { setItem } from "../features/ItemSlice";
 
 
 function NavBar() {

@@ -1,0 +1,38 @@
+.navcategory a{
+    font-size: 1.04em;
+   font-weight: 600;
+   margin-top: 3px;
+   color: rgb(17, 17, 17);
+   border: none;
+   text-align: center;
+   text-decoration: none;
+   position: relative;
+
+} 
+.navcategory a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 4px; 
+    background-color: rgb(255, 208, 0);
+    left: 0;
+    bottom: 0px;
+    transition: width 0.1s ease-in-out; 
+  }
+
+  .navcategory a:hover{
+    color: rgb(255, 208, 0);
+  }
+  
+  .navcategory a:hover::after {
+    width: 100%; 
+  
+  }
+  .navcategory .active {
+    color: rgb(255, 208, 0) !important; 
+    text-decoration: underline;
+    font-weight: bold;
+    text-underline-offset: 10px;
+    text-decoration-thickness: 4px;
+    
+  }

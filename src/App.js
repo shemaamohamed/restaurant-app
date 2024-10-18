@@ -22,6 +22,7 @@ import AdminLayout from "./Admin/AdminLayout.jsx";
 import MessagesPage from "./Admin/MessagesPage.jsx";
 import {  ThemeProvider, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
+import MenuPage from "./pages/MenuPage.jsx";
 
 function App() {
   const theme = useTheme();
@@ -60,6 +61,7 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<LoginFormPage />} />
           <Route path="/signup" element={<SignUpFormPage />} />
+          <Route path="/menu" element={<MenuPage/>} />
           <Route path="/wishlist" element={<WishListPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="order-confirmed" element={<OrderConfirmedPage />} />
