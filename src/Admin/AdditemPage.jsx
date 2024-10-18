@@ -17,17 +17,17 @@ function AdditemPage() {
     category: "",
   });
 
-  const [errors, setErrors] = useState({}); 
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setItem({ ...item, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" }); 
+    setErrors({ ...errors, [e.target.name]: "" });
   };
 
   const handleImageUpload = (file) => {
     setItem({ ...item, photoName: file });
     console.log("Uploaded file:", file);
-    setErrors({ ...errors, photoName: "" }); 
+    setErrors({ ...errors, photoName: "" });
   };
 
   const validate = () => {
@@ -54,31 +54,30 @@ function AdditemPage() {
     }
 
     try {
-      console.log('kkkk')
       const formData = new FormData();
       formData.append("name", item.name);
       formData.append("description", item.description);
       formData.append("price", item.price);
       formData.append("category", item.category);
       formData.append("image", item.photoName);
-      
-      console.log(formData)
-      await axios.post("http://localhost:4000/api/food/add",
-        formData,
-        {
+
+      await axios
+        .post("http://localhost:4000/api/food/add", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-          }
-        }
-      ).then((res) => {
-        toast.success("Product added successfully");
-        navigate("/productlist");
-      }).catch((err) => {
-        console.log(err);
-        toast.error(err);
-      }); 
-    }
-    catch (error) {
+          },
+        })
+        .then((res) => {
+          toast.success("Product added successfully");
+          navigate("/productlist");
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(
+            err.response?.data?.message || err.message || "Error adding product"
+          );
+        });
+    } catch (error) {
       toast.error("Error adding product");
     }
   };
@@ -145,7 +144,7 @@ function AdditemPage() {
                 <Form.Label>Category Item</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter Price of item"
+                  placeholder="Enter Category of item"
                   value={item.category}
                   onChange={handleChange}
                   name="category"
@@ -155,8 +154,6 @@ function AdditemPage() {
                   {errors.category}
                 </Form.Control.Feedback>
               </Form.Group>
-
-              
             </Col>
 
             <Col md={6} xs={12} className="mb-3">

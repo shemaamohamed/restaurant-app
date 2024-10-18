@@ -19,34 +19,33 @@ function LoginFormPage() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const handleChange=async(e)=>{
-
-    setUser({...user,[e.target.name]:e.target.value})
-
-  }
+  const handleChange = async (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-    
+
     try {
-      axios.post('http://localhost:4000/api/user/login',user).then((res)=>{
-        console.log(res.data);
-        dispatch(login(res.data));
-        toast.success("Successfully logged in!");
-  
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
+      axios
+        .post("http://localhost:4000/api/user/login", user)
+        .then((res) => {
+          console.log(res.data);
+          dispatch(login(res.data));
+          toast.success("Successfully logged in!");
 
-      }).catch((error)=>{
-        setError(error.response ? error.response.data.message : error.message);
-        toast.error("Login failed. Please try again.");
-
-      })
-
-      
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
+        })
+        .catch((error) => {
+          setError(
+            error.response ? error.response.data.message : error.message
+          );
+          toast.error("Login failed. Please try again.");
+        });
     } finally {
       setLoading(false); // Reset loading state
     }

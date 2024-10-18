@@ -17,19 +17,22 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ListItemIcon } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
-import {
-  AddCircle,
-  Message,
-  Person,
-  Shop,
-} from "@mui/icons-material";
+import { AddCircle, Message, Person, Shop } from "@mui/icons-material";
+import HomeIcon from "@mui/icons-material/Home";
 import AdminProfile from "./AdminProfile";
 import AdditemPage from "./AdditemPage";
 import ProductListPage from "./ProductListPage";
 import OrderPage from "./OrderPage";
 import MessagesPage from "./MessagesPage";
+import AdminHomePage from "./AdminHomePage";
 
 const ArrayPages = [
+  {
+    name: "Home Page",
+    icon: <HomeIcon />,
+    page: <AdminHomePage />,
+    path: "/home",
+  },
   {
     name: "Add item",
     icon: <AddCircle />,

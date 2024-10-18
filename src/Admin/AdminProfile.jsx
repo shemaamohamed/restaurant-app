@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function AdminProfile() {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const adminData = {
     name: "John Doe",
     email: "johndoe@example.com",
@@ -25,8 +25,7 @@ function AdminProfile() {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/')
-
+    navigate("/");
   };
 
   return (
@@ -55,8 +54,13 @@ function AdminProfile() {
                   <Button variant="contained" color="primary">
                     Edit Profile
                   </Button>
-                  <Button onClick={()=>{
-                  handleLogout()}} variant="outlined" color="secondary">
+                  <Button
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                    variant="outlined"
+                    color="secondary"
+                  >
                     Logout
                   </Button>
                 </Stack>
