@@ -9,7 +9,6 @@ import axios from "axios";
 function CardMelas({ product, name, description, price, photoName }) {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  const user_login =localStorage.getItem('token')
 
 
   const item = {
@@ -18,8 +17,6 @@ function CardMelas({ product, name, description, price, photoName }) {
   };
 
   const addtocart= async()=>{
-    console.log(item)
-    console.log(token)
     await axios.post('http://localhost:4000/api/cart/add',
       item,
       {

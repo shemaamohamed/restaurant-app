@@ -1,45 +1,60 @@
 import Carousel from 'react-bootstrap/Carousel';
 import '../style/Slider.css';
+import axios from "axios";
+import { useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setItem } from "../features/ItemSlice";
 
 
 
 function Slider() {
-    const background_image1 = require('../assets/B-meduim1.jpg');
-    const background_image2 = require('../assets/B-meduim2.jpg');
-    const background_image3 = require('../assets/B-meduim3.jpg');
-    const background_image4 = require('../assets/B-meduim4.jpg');
+  const dispatch = useDispatch();
+  const menuItems = useSelector((state) => state.item.item || []);
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/api/food/list') 
+      .then(response =>{
+        dispatch(setItem(response.data.data))
+      })
+        
+      .catch(error =>{ console.error('Error fetching menu items:', error)
+      });
+  }, [dispatch]);
+ 
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; 
+    }
+    return array;
+  };
+
+  const getRandomItems = (items) => {
+    const shuffledItems = shuffleArray([...items]); 
+    return shuffledItems.slice(0, 4); 
+  };
+
+  const randomItems = menuItems.length > 0 ? getRandomItems(menuItems) : [];
+   
 
 
 
   return (
     <Carousel  className='content'  >
-      <Carousel.Item interval={1000}>
-      <img   src={background_image1} alt="First slide" />
-        <Carousel.Caption>
-          <h3>Tomato Burger and Fried Fries </h3>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={1000}>
-      <img  src={background_image2} alt="First slide" />
-        <Carousel.Caption>
-          <h3>Pasta With Tomato and Basil</h3>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={1000}>
-      <img  src={background_image3} alt="First slide" />
-        <Carousel.Caption>
-          <h3 >Grilled Barbecue
-          </h3>
-         
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={1000}>
-      <img  src={background_image4} alt="First slide" />
-        <Carousel.Caption>
-          <h3>Cheesy Baked Lasagna Slice in an Earthenware</h3>
-         
-        </Carousel.Caption>
-      </Carousel.Item>
+      {
+        randomItems.map((item, index) => (
+          <Carousel.Item key={index} interval={1000}>
+            <img  src={`http://localhost:4000/images/${item.image}`} alt={item.name} />
+            <Carousel.Caption>
+              <h3>{item.name}</h3>
+            </Carousel.Caption>
+          </Carousel.Item>
+        ))
+      }
+      
+     
+      
+      
     </Carousel>
 
   );

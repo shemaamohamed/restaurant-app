@@ -90,22 +90,12 @@ function CartPage() {
 
   return (
     <Container style={{marginTop:'50px'}}>
-     
-          <div >
-            <h3  style={{margin:'auto' ,padding:'10px'}}>Shopping Cart</h3>
-            {/* {Object.keys(cart).length > 0 && (
-              <Button variant="danger" onClick={handleDeleteAll}>
-                Delete All
-              </Button>
-            )} */}
-          </div>
-
           {Object.keys(cart).length > 0 ? (
             <Table style={{ textAlign: "center" ,margin:"auto" ,width:'70%'  }}  responsive  bordered>
               <thead>
                 <tr>
                 <th style={{ width: '15%' }}>Product</th>
-                <th style={{ width: '20%' }}>Description</th> {/* Wider column for description */}
+                <th style={{ width: '20%' }}>Description</th> 
                 <th style={{ width: '10%' }}>Price</th>
                 <th style={{ width: '10%' }}>Quantity</th>
                 <th style={{ width: '10%' }}>Total</th>
@@ -138,7 +128,7 @@ function CartPage() {
                         <span className="mx-2">{quantity}</span>
                         <Button onClick={() => incrementQuantity(itemId)} variant="light" size="sm">+</Button>
                         {' '}
-                        {/* <Button variant="outline-danger" className="ml-3" onClick={() => dispatch(removeFromCart(itemId))}>X</Button> */}
+                        
                       </td>
                       <td>{product.price * quantity} EGP</td>
                     </tr>

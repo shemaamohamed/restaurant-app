@@ -36,6 +36,7 @@ function App() {
       if(user){
         setUsertype(user);
         setToken(token);
+        console.log(settoken);
        
       
       } else {
@@ -46,7 +47,7 @@ function App() {
       clearInterval(intervalValue)
     }
 
-  },[]);
+  },[settoken]);
 
   
   return (

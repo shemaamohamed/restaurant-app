@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../features/ItemSlice";
 import { setCart } from "../features/CartSlice";
 import NavCategory from "../components/NavCategory";
+import Loader from "../components/Loader";
 
 function MenuPage() {
     const dispatch = useDispatch();
@@ -18,16 +19,19 @@ function MenuPage() {
     const [items,setItems]=useState([]);
     const [search,setSearch]=useState("")
     const [category,setCategory]=useState('menu')
-  
+    const [loading,setloading]=useState(false)
     useEffect(() => {
       axios.get('http://localhost:4000/api/food/list') 
         .then(response =>{
           dispatch(setItem(response.data.data))
           setItems(response.data.data)
-        })
-          
-        .catch(error => console.error('Error fetching menu items:', error));
-    }, []);
+          setloading(false)
+        }) 
+        .catch(error => {
+            console.error('Error fetching menu items:', error)
+            setloading(true)
+        });
+    }, [dispatch]);
     useEffect(() => {
       if(token){
         const intervalId = setInterval(()=>{
@@ -120,8 +124,9 @@ function MenuPage() {
             photoName={product.image}
           />
         </Col>
-      ))):(
-        <p>Loading menu...</p>
+      ))):(loading &&(
+        <Loader></Loader>
+        )
       )}
     </Row>
   </Container>

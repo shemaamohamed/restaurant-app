@@ -1,4 +1,4 @@
-import { Container } from "react-bootstrap";
+import {  Container } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import "../style/TopMeals.css";
@@ -7,64 +7,84 @@ import axios from "axios";
 import { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../features/ItemSlice";
-import { setCart } from "../features/CartSlice";
+import { useState } from 'react';
+import Loader from "./Loader";
+import { useNavigate } from "react-router-dom";
+import ShowButton from "./Buttons/ShowButton";
 
 function TopMeals() {
   const dispatch = useDispatch();
+  const navigate=useNavigate()
   const menuItems = useSelector((state) => state.item.item || []);
-  const token = localStorage.getItem("token");
+  const [loading,setloading]=useState(false)
 
   useEffect(() => {
     axios.get('http://localhost:4000/api/food/list') 
       .then(response =>{
         dispatch(setItem(response.data.data))
+        setloading(false)
       })
         
-      .catch(error => console.error('Error fetching menu items:', error));
-  }, []);
-  useEffect(() => {
-    if(token){
-      const intervalId = setInterval(()=>{
-        axios.get('http://localhost:4000/api/cart/get', {
-          headers: {
-            'token': token,
-          },
-        }).then(response => {
-          dispatch(setCart(response.data.cartData)); // Set the cart data in Redux
-    
-        }).catch(error => console.error('Error fetching cart data:', error));
+      .catch(error =>{ console.error('Error fetching menu items:', error)
+        setloading(true)
+      });
+  }, [dispatch]);
   
-      },1000)
-      return () => {
-        clearInterval(intervalId);
-      };
-      
-
-    }else{
-      dispatch(setCart([]))
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]; 
     }
-   
-  }, [dispatch ,token]);
+    return array;
+  };
+
+  const getRandomItems = (items) => {
+    const shuffledItems = shuffleArray([...items]); 
+    return shuffledItems.slice(0, 4); 
+  };
+
+  const randomItems = menuItems.length > 0 ? getRandomItems(menuItems) : [];
+  const ShowFullMenu=()=>(
+    navigate('/menu')
+  )
+
   return (
     <Container className="p-3 mt-3">
-      <h1 className="text-center align-middle">Top Meals</h1>
+        
+              
+              
       <Row className="p-3" >
-        {menuItems.length > 0 ?(menuItems.map((product) => (
-          <Col key={product.id}>
-            <CardMelas
-              product={product}
-              name={product.name}
-              description={product.description}
-              price={product.price}
-              photoName={product.image}
-            />
-          </Col>
-        ))):(
-          <p>Loading menu...</p>
-        )}
+      
+         
+             { randomItems.length > 0 ?(randomItems.map((product) => (
+                <Col key={product.id}>
+                  <CardMelas
+                    product={product}
+                    name={product.name}
+                    description={product.description}
+                    price={product.price}
+                    photoName={product.image}
+                  />
+                </Col>
+              ))):(loading && (
+                <Loader></Loader>
+              )
+
+                  
+              )}
+                  {!loading && (
+        <Col className="d-flex justify-content-end mt-3">
+          <ShowButton ShowFullMenu={ShowFullMenu}></ShowButton>
+        </Col>)}
+           
+   
+          
+      
       </Row>
+     
     </Container>
   );
 }
+
 
 export default TopMeals;
