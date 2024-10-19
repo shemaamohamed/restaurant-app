@@ -14,17 +14,14 @@ import MuiDrawer from "@mui/material/Drawer";
 import ListIcon from "@mui/icons-material/List";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-// import ListItemIcon from "@mui/material/ListItemIcon";
 import { ListItemIcon } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
-import { AddCircle, Message, Person, Shop } from "@mui/icons-material";
+import { AddCircle, Person, Shop } from "@mui/icons-material";
 import HomeIcon from "@mui/icons-material/Home";
 import AdminProfile from "./AdminProfile";
 import AdditemPage from "./AdditemPage";
 import ProductListPage from "./ProductListPage";
 import OrderPage from "./OrderPage";
-import MessagesPage from "./MessagesPage";
 import AdminHomePage from "./AdminHomePage";
 
 const ArrayPages = [
@@ -53,12 +50,7 @@ const ArrayPages = [
     path: "/adminprofile",
   },
   { name: "Orders", icon: <Shop />, page: <OrderPage />, path: "/orders" },
-  {
-    name: "Messages",
-    icon: <Message />,
-    page: <MessagesPage />,
-    path: "/messages",
-  },
+ 
 ];
 
 const drawerWidth = 240;

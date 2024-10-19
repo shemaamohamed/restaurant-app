@@ -12,20 +12,21 @@ import {
 import { logout } from "../features/AuthSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import profile from '../assets/profile.png'
 
 function AdminProfile() {
   const navigate= useNavigate();
+  const name=localStorage.getItem('name');
+  const email=localStorage.getItem('email');
   const adminData = {
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "+123456789",
-    profileImage: "https://via.placeholder.com/150", // Placeholder image
-    bio: "Admin with extensive experience in managing teams and projects.",
+    name: name,
+    email: email,
+    bio: "Experienced admin skilled in managing restaurant operations",
   };
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/')
+    navigate('')
 
   };
 
@@ -38,7 +39,7 @@ function AdminProfile() {
               <Stack direction="column" alignItems="center" spacing={2}>
                 <Avatar
                   alt="Profile"
-                  src={adminData.profileImage}
+                  src={profile}
                   sx={{ width: 150, height: 150 }}
                 />
                 <Typography variant="h5">{adminData.name}</Typography>
@@ -46,17 +47,12 @@ function AdminProfile() {
                   <strong>Email:</strong> {adminData.email}
                 </Typography>
                 <Typography variant="body1">
-                  <strong>Phone:</strong> {adminData.phone}
-                </Typography>
-                <Typography variant="body1">
                   <strong>Bio:</strong> {adminData.bio}
                 </Typography>
                 <Stack direction="row" spacing={2}>
-                  <Button variant="contained" color="primary">
-                    Edit Profile
-                  </Button>
+                  
                   <Button onClick={()=>{
-                  handleLogout()}} variant="outlined" color="secondary">
+                  handleLogout()}} variant="outlined" color="error">
                     Logout
                   </Button>
                 </Stack>
