@@ -1,5 +1,5 @@
 import foodModel from "../models/foodModel.js";
-import fs from 'fs/promises';  // Use promises-based fs for async/await
+import fs from 'fs/promises';  
 
 // Add food item
 const addFood = async (req, res) => {
@@ -9,6 +9,10 @@ const addFood = async (req, res) => {
     if (!name || !description || !price || !category || !req.file) {
         return res.status(400).json({ success: false, message: "All fields and image are required" });
     }
+    const food = await foodModel.findOne({ name });
+        if (food) {
+            return res.status(404).json({ success: false, message: "Food Name is already exist " });
+        }
 
     try {
         const image_filename = `${req.file.filename}`;
@@ -44,15 +48,16 @@ const editFood = async (req, res) => {
     if (!id || !name || !description || !price || !category) {
         return res.status(400).json({ success: false, message: "ID, name, description, price, and category are required" });
     }
-
+    const duplicateFood = await foodModel.findOne({ name, _id: { $ne: id } });
+        if (duplicateFood) {
+            return res.status(400).json({ success: false, message: "Food name already exists for another item" });
+        }
     try {
-        // Find the food item by ID
         const food = await foodModel.findById(id);
         if (!food) {
             return res.status(404).json({ success: false, message: "Food Not Found" });
         }
 
-        // Update the fields
         food.name = name;
         food.description = description;
         food.price = price;

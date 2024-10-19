@@ -6,16 +6,7 @@ import AddButton from "../components/Buttons/AddButton";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../features/ItemSlice";
-/* <img 
-src={item.photoName 
-  ? (item.photoName.startsWith('http') 
-    ? item.photoName 
-    : require(`../assets/${item.photoName}`)) 
-  : require('../assets/B-meduim1.jpg')} 
-alt={item.name} 
-width="50" 
-// onError={(e) => { e.target.src = require('../../assets/B-meduim1.jpg'); }} 
-/> */
+
 
 function ProductListPage() {
   const dispatch = useDispatch();
@@ -32,7 +23,6 @@ function ProductListPage() {
 
       }).catch(error=>{
         setError(error.message);
-       console.error('Error fetching data:', error);
        setLoading(false);
 
       }) 

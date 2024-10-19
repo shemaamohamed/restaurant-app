@@ -26,7 +26,6 @@ function AdditemPage() {
 
   const handleImageUpload = (file) => {
     setItem({ ...item, photoName: file });
-    console.log("Uploaded file:", file);
     setErrors({ ...errors, photoName: "" }); 
   };
 
@@ -49,12 +48,11 @@ function AdditemPage() {
     const formErrors = validate();
 
     if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors); // Set error messages if validation fails
+      setErrors(formErrors); 
       return;
     }
 
     try {
-      console.log('kkkk')
       const formData = new FormData();
       formData.append("name", item.name);
       formData.append("description", item.description);
@@ -62,7 +60,6 @@ function AdditemPage() {
       formData.append("category", item.category);
       formData.append("image", item.photoName);
       
-      console.log(formData)
       await axios.post("http://localhost:4000/api/food/add",
         formData,
         {
@@ -74,8 +71,11 @@ function AdditemPage() {
         toast.success("Product added successfully");
         navigate("/productlist");
       }).catch((err) => {
-        console.log(err);
-        toast.error(err);
+        if (err.response && err.response.data && err.response.data.message) {
+          toast.error(` ${err.response.data.message}`);
+        } else {
+          toast.error("An error occurred while adding the product.");
+        }
       }); 
     }
     catch (error) {
@@ -145,7 +145,7 @@ function AdditemPage() {
                 <Form.Label>Category Item</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter Price of item"
+                  placeholder="Enter Category of item"
                   value={item.category}
                   onChange={handleChange}
                   name="category"

@@ -1,5 +1,5 @@
 import { Dialog, DialogActions,DialogTitle } from "@mui/material"
-import { useCallback, useEffect, useState } from "react"
+import {  useState } from "react"
 import { Button } from "react-bootstrap"
 import { Form } from "react-bootstrap"
 
@@ -19,13 +19,11 @@ function UpdateitemPage({show,onHide,onConfirm,category,description,price,itemNa
 
   const handleImageUpload = (file) => {
     setItem({ ...item, photoName: file });
-    console.log("Uploaded file:", file);
   };
   const handleChange=(e)=>{
     setItem({...item,[e.target.name]:e.target.value})
     setErrors({ ...errors, [e.target.name]: "" }); 
 
-    console.log(item)
   }
   const validate = () => {
     const newErrors = {};
@@ -45,21 +43,17 @@ function UpdateitemPage({show,onHide,onConfirm,category,description,price,itemNa
 
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors); 
-      return;
     }
-    
-    const formData = new FormData();
+    try{
+      const formData = new FormData();
       formData.append("id",id)
       formData.append("name", item.name);
       formData.append("description", item.description);
       formData.append("price", item.price);
       formData.append("category", item.category);
       if(item.photoName){
-        console.log(item.photoName)
         formData.append("image", item.photoName);
       }
-    
-    try{
       await axios.put(`http://localhost:4000/api/food/update`,
         formData,
         {
@@ -71,15 +65,16 @@ function UpdateitemPage({show,onHide,onConfirm,category,description,price,itemNa
         onHide();
         toast.success("Item updated successfully");
       }).catch((err) => {
-        console.log(err); 
+        if (err.response && err.response.data && err.response.data.message) {
+          toast.error(` ${err.response.data.message}`);
+        } else {
+          toast.error("An error occurred while adding the product.");
+        }
      
       });
-      
-
     }
     catch(error){
       toast.error("Error updating item");
-      console.log(error)
     } 
   }
   return (
