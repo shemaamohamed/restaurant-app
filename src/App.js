@@ -19,7 +19,6 @@ import AdminProfile from "./Admin/AdminProfile.jsx";
 import UpdateitemPage from "./Admin/UpdateitemPage.jsx";
 import OrderPage from "./Admin/OrderPage.jsx";
 import AdminLayout from "./Admin/AdminLayout.jsx";
-import MessagesPage from "./Admin/MessagesPage.jsx";
 import { ThemeProvider, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import MenuPage from "./pages/MenuPage.jsx";
@@ -37,7 +36,6 @@ function App() {
       if (user) {
         setUsertype(user);
         setToken(token);
-        console.log(settoken);
       } else {
         setUsertype("user");
       }
@@ -50,41 +48,38 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        {usertype === "user" ? (
-          <>
-            <NavBar />
-            <Routes>
-              <Route path="" element={<Homepage />} />
-              <Route path="/connect" element={<Connectpage />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/login" element={<LoginFormPage />} />
-              <Route path="/signup" element={<SignUpFormPage />} />
-              <Route path="/menu" element={<MenuPage />} />
-              <Route path="/wishlist" element={<WishListPage />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
-              <Route path="order-confirmed" element={<OrderConfirmedPage />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
+      {
+        usertype ==='user' ?( <>
+         <NavBar />
+        <Routes>
+          <Route path="" element={<Homepage />} />
+          <Route path="/connect" element={<Connectpage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/login" element={<LoginFormPage />} />
+          <Route path="/signup" element={<SignUpFormPage />} />
+          <Route path="/menu" element={<MenuPage/>} />
+          <Route path="/wishlist" element={<WishListPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="order-confirmed" element={<OrderConfirmedPage />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+        </>) : usertype ==='admin' ? (
+        <>
+        <ThemeProvider theme={theme}>
+        <Routes>
+           <Route path="" element={<AdminLayout />}>
+                <Route path="additems" element={<AdditemPage />} />
+                <Route path="productlist" element={<ProductListPage />} />
+                <Route path="updateitem" element={<UpdateitemPage />} />
+                <Route path="orders" element={<OrderPage />} />
+                <Route path="adminprofile" element={<AdminProfile />} />
+                <Route path="*" element={<PageNotFound />} />
+            </Route>
+          </Routes>
+          </ThemeProvider>
           </>
-        ) : usertype === "admin" ? (
-          <>
-            <ThemeProvider theme={theme}>
-              <Routes>
-                <Route path="/" element={<AdminLayout />}>
-                  <Route index element={<Navigate to="home" />} />
-                  <Route path="home" element={<AdminHomePage />} />
-                  <Route path="additems" element={<AdditemPage />} />
-                  <Route path="productlist" element={<ProductListPage />} />
-                  <Route path="updateitem" element={<UpdateitemPage />} />
-                  <Route path="orders" element={<OrderPage />} />
-                  <Route path="adminprofile" element={<AdminProfile />} />
-                  <Route path="messages" element={<MessagesPage />} />
-                  <Route path="*" element={<PageNotFound />} />
-                </Route>
-              </Routes>
-            </ThemeProvider>
-          </>
-        ) : null}
+      ) :null
+      }
         <Toaster />
       </BrowserRouter>
     </div>

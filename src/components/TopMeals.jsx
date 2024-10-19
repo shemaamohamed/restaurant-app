@@ -11,12 +11,13 @@ import { useState } from 'react';
 import Loader from "./Loader";
 import { useNavigate } from "react-router-dom";
 import ShowButton from "./Buttons/ShowButton";
+import toast from "react-hot-toast";
 
 function TopMeals() {
   const dispatch = useDispatch();
   const navigate=useNavigate()
   const menuItems = useSelector((state) => state.item.item || []);
-  const [loading,setloading]=useState(false)
+  const [loading,setloading]=useState(true)
 
   useEffect(() => {
     axios.get('http://localhost:4000/api/food/list') 
@@ -25,8 +26,9 @@ function TopMeals() {
         setloading(false)
       })
         
-      .catch(error =>{ console.error('Error fetching menu items:', error)
-        setloading(true)
+      .catch(error =>{
+         setloading(true)
+         toast.error('Error fetching menu items')
       });
   }, [dispatch]);
   

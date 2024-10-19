@@ -26,7 +26,6 @@ function CardMelas({ product, name, description, price, photoName }) {
         },
       }
     ).then((res)=>{
-      console.log(res.data)
       toast.success("Added to Cart")
       dispatch(addToCart(product._id));
    

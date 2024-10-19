@@ -27,11 +27,13 @@ function DeleteButton({name,id}) {
         
       })
       .catch(error => {
-        console.error(`Error deleting item ${name}:`, error);
+        toast.error(
+          error.response.data.message || "An error occurred while deleting the item."
+        )
       });
       
     }catch(error) {
-      console.error('Error fetching data:', error);
+      toast.error('Error fetching data:', error);
     }
       
   };

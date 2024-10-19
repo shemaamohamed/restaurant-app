@@ -4,57 +4,25 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import "../style/TopMeals.css";
 import CardMelas from "../components/CardMeals";
-import axios from "axios";
-import { useEffect, useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setItem } from "../features/ItemSlice";
-import { setCart } from "../features/CartSlice";
+import {  useEffect, useState} from "react";
+import { useSelector } from "react-redux";
+
 import NavCategory from "../components/NavCategory";
 import Loader from "../components/Loader";
 
 function MenuPage() {
-    const dispatch = useDispatch();
     const menuItems = useSelector((state) => state.item.item || []);
-    const token = localStorage.getItem("token");
     const [items,setItems]=useState([]);
-    const [search,setSearch]=useState("")
-    const [category,setCategory]=useState('menu')
-    const [loading,setloading]=useState(false)
+    const [search,setSearch]=useState("");
+    const [category,setCategory]=useState('menu');
+    const [loading,setloading]=useState(true);
     useEffect(() => {
-      axios.get('http://localhost:4000/api/food/list') 
-        .then(response =>{
-          dispatch(setItem(response.data.data))
-          setItems(response.data.data)
-          setloading(false)
-        }) 
-        .catch(error => {
-            console.error('Error fetching menu items:', error)
-            setloading(true)
-        });
-    }, [dispatch]);
-    useEffect(() => {
-      if(token){
-        const intervalId = setInterval(()=>{
-          axios.get('http://localhost:4000/api/cart/get', {
-            headers: {
-              'token': token,
-            },
-          }).then(response => {
-            dispatch(setCart(response.data.cartData)); 
-      
-          }).catch(error => console.error('Error fetching cart data:', error));
-    
-        },1000)
-        return () => {
-          clearInterval(intervalId);
-        };
-        
-  
-      }else{
-        dispatch(setCart([]))
-      }
-     
-    }, [dispatch ,token]);
+      if (menuItems.length > 0) {
+          setloading(false);
+      }if(category==='menu'){
+        displayAll()
+    }
+  }, []);
     const displayAll=()=>{
         setItems(menuItems)
         setCategory('menu');
@@ -105,30 +73,32 @@ function MenuPage() {
             }else if(category==='Salad'){
                 displaySalad()
             }
-        }
-       
+        } 
     }
-    
-
   return (
     <Container className="p-3 mt-3"> 
     <NavCategory displayAll={displayAll} displayDeserts={displayDeserts} displayPasta={displayPasta} displaySalad={displaySalad} displaySandwich={displaySandwich} handleSearch={handleSearch}   searchValue={search}/>
-    <Row className="p-3" >
-      {menuItems.length > 0 ?(items.map((product) => (
-        <Col key={product.id}>
-          <CardMelas
-            product={product}
-            name={product.name}
-            description={product.description}
-            price={product.price}
-            photoName={product.image}
-          />
-        </Col>
-      ))):(loading &&(
-        <Loader></Loader>
-        )
-      )}
-    </Row>
+    <Row className="p-3">
+                {loading ? (
+                    <Loader />
+                ) : (
+                    items.length > 0 ? (
+                        items.map((product) => (
+                            <Col key={product.id}>
+                                <CardMelas
+                                    product={product}
+                                    name={product.name}
+                                    description={product.description}
+                                    price={product.price}
+                                    photoName={product.image}
+                                />
+                            </Col>
+                        ))
+                    ) : (
+                        <p>No items found</p>
+                    )
+                )}
+            </Row>
   </Container>
   )
 }

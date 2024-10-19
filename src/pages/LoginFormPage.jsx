@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../style/Login.css";
 import email_icon from "../assets/email.png";
 import password_icon from "../assets/password.png";
-import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../features/AuthSlice";
@@ -32,8 +32,8 @@ function LoginFormPage() {
     
     try {
       axios.post('http://localhost:4000/api/user/login',user).then((res)=>{
-        console.log(res.data);
         dispatch(login(res.data));
+        localStorage.setItem("email", user.email);
         toast.success("Successfully logged in!");
   
         setTimeout(() => {

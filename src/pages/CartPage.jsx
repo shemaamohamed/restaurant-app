@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import CartEmpty from "../components/CartEmpty";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function CartPage() {
   const navigate = useNavigate();
@@ -25,9 +26,11 @@ function CartPage() {
             'token': token,
           },
         }).then(response => {
-          dispatch(setCart(response.data.cartData)); // Set the cart data in Redux
+          dispatch(setCart(response.data.cartData)); 
     
-        }).catch(error => console.error('Error fetching cart data:', error));
+        }).catch(error => toast.error(
+          "Error fetching cart data"
+        ));
   
       },1000)
       return () => {
@@ -56,8 +59,9 @@ function CartPage() {
       },
     }).then(() => {
       dispatch(updateCartQuantity({ itemId, quantity: cart[itemId] + 1 }));
+      toast.success("Item added to cart successfully");
     }).catch((err) => {
-      console.log(err);
+      toast.error("Error adding item to cart");
     });
   };
 
@@ -75,14 +79,14 @@ function CartPage() {
         
       ).then(() => {
         if(cart[itemId] === 1){
-          console.log("Item removed from cart successfully");
+          toast.success("Item removed from cart successfully");
           dispatch(removeFromCart(itemId));
         }
         else{
           dispatch(updateCartQuantity({ itemId, quantity: cart[itemId] - 1 }));
         }
       }).catch((err) => {
-        console.log(err);
+        toast.error("Error removing item from cart");
       });
     } 
   };

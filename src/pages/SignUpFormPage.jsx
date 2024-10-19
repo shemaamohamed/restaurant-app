@@ -34,7 +34,6 @@ function SignUpFormPage() {
 
     try {
       axios.post('http://localhost:4000/api/user/register',user).then((res)=>{
-        console.log(res.data)
         dispatch(signUp(user));
 
       setTimeout(() => {
