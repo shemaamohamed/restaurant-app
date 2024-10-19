@@ -98,7 +98,6 @@ const listOrders = async (req, res) => {
     }
 };
 
-// Updating the status of an order (for admin panel)
 const updateStatus = async (req, res) => {
     const { orderId, status } = req.body;
 

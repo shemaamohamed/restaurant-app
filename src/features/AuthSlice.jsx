@@ -13,6 +13,8 @@ const authSlice = createSlice({
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("type", action.payload.type);
       localStorage.setItem("name", action.payload.name);
+      localStorage.setItem("id", action.payload._id);
+
 
 
     },
@@ -23,6 +25,7 @@ const authSlice = createSlice({
       localStorage.removeItem("item");
       localStorage.removeItem("type");
       localStorage.removeItem("name");
+      localStorage.removeItem("id");
 
       
     },
