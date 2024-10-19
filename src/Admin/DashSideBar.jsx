@@ -8,6 +8,7 @@ import {
   styled,
   useTheme,
 } from "@mui/material";
+import logo from "../assets/logo.JPG";
 
 import MuiDrawer from "@mui/material/Drawer";
 import ListIcon from "@mui/icons-material/List";
@@ -17,19 +18,22 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ListItemIcon } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
-import {
-  AddCircle,
-  Message,
-  Person,
-  Shop,
-} from "@mui/icons-material";
+import { AddCircle, Message, Person, Shop } from "@mui/icons-material";
+import HomeIcon from "@mui/icons-material/Home";
 import AdminProfile from "./AdminProfile";
 import AdditemPage from "./AdditemPage";
 import ProductListPage from "./ProductListPage";
 import OrderPage from "./OrderPage";
 import MessagesPage from "./MessagesPage";
+import AdminHomePage from "./AdminHomePage";
 
 const ArrayPages = [
+  {
+    name: "Home Page",
+    icon: <HomeIcon />,
+    page: <AdminHomePage />,
+    path: "/home",
+  },
   {
     name: "Add item",
     icon: <AddCircle />,
@@ -121,6 +125,7 @@ function DashSideBar({ open, handleDrawerClose }) {
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
+        <img src={logo} alt="not found" />
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === "rtl" ? (
             <ChevronRightIcon />
