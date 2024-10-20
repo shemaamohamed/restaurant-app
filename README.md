@@ -47,20 +47,26 @@
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/shemaamohamed/restaurant-app.git```
+   git clone https://github.com/shemaamohamed/restaurant-app.git
 2. Navigate to the project directory:
        ```bash
-           cd restaurant-app```
+           cd restaurant-app
 3. Install the required dependencies:
        ```bash
-           npm install```
-4. Set up environment variables:
+           npm install
+
+4. Start Frontend
+        ```bash
+           npm start 
+5. Set up environment variables:
    Create a .env file in the root directory and add the necessary variables 
-5. Start the development server
+6. Start the development server
         ```bash
            cd backend
-           node server
-           ```
+        ```bash
+           node server 
+
+       
        
             
 
