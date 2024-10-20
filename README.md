@@ -19,14 +19,14 @@
 - Integrated with a secure payment gateway (Stripe ).
 
 ### User Interface:
-![Homepage](../screenshots/Home1.png)
-![Homepage2](./screenshots/Home2.png)
+![Homepage](.screenshots/Home1.png)
+![Homepage2](.screenshots/Home2.png)
 *Homepage showcasing the featured meals.*
 
-![Homepage3](./screenshots/WishList.png)
+![Homepage3](.screenshots/WishList.png)
 *Wishlist page for saving favorite meals.*
 
-![Menu](./screenshots/Menu.png)
+![Menu](.screenshots/Menu.png)
 *Menu showcasing the featured meals.*
 
 ![Cart](./screenshots/Cart.png)
