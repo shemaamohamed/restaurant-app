@@ -29,7 +29,7 @@ const ArrayPages = [
     name: "Home Page",
     icon: <HomeIcon />,
     page: <AdminHomePage />,
-    path: "/home",
+    path: "/",
   },
   {
     name: "Add item",
@@ -50,7 +50,6 @@ const ArrayPages = [
     path: "/adminprofile",
   },
   { name: "Orders", icon: <Shop />, page: <OrderPage />, path: "/orders" },
- 
 ];
 
 const drawerWidth = 240;

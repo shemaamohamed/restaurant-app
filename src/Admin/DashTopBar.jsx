@@ -8,10 +8,9 @@ import {
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
-import { AccountCircle, Notifications } from "@mui/icons-material";
+import { AccountCircle } from "@mui/icons-material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Badge } from "react-bootstrap";
 
 const drawerWidth = 240;
 
@@ -67,10 +66,6 @@ function DashTopBar({ open, handleDrawerOpen }) {
         <Box flexGrow={1} />
 
         <Stack direction={"row"}>
-          <IconButton onClick={() => navigate("/messages")} color="inherit">
-            <Notifications />
-          </IconButton>
-
           <div>
             <IconButton
               size="large"
