@@ -2,6 +2,11 @@
 
 ## Introduction
 **Yummy** is a modern, fully responsive restaurant web application that allows users to browse the menu, add meals to their cart, place orders, and make secure payments. The app features a robust admin dashboard for managing meals and orders. State management is handled with **Redux Toolkit** for efficient and scalable state handling.
+## Hosting
+
+You can access the live version of the project at the following URL:
+
+[YummY Website](http://ec2-13-61-64-46.eu-north-1.compute.amazonaws.com:3000/)
 
 ## Features
 ### User:
