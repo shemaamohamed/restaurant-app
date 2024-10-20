@@ -3,13 +3,13 @@ import '../style/Loader.css'
 const Loader = () => {
   return (
     <Container style={{padding:'30px'}}>
-        <div class="containerr">
-  <div class="preloader">
+        <div className="containerr">
+  <div className="preloader">
     <span></span>
     <span></span>
     <span></span>
   </div>
-  <div class="shadow"></div>
+  <div className="shadow"></div>
 </div>
 
     </Container>

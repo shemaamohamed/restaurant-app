@@ -78,7 +78,7 @@ function CardMelas({ product, name, description, price, photoName }) {
           }
           className="CartBtn"
         >
-          <span class="IconContainer">
+          <span className="IconContainer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="1em"
@@ -86,7 +86,7 @@ function CardMelas({ product, name, description, price, photoName }) {
               stroke-linejoin="round"
               stroke-linecap="round"
               viewBox="0 0 24 24"
-              stroke-width="2"
+              strokeWidth="2"
               fill="none"
               stroke="currentColor"
             >
@@ -95,7 +95,7 @@ function CardMelas({ product, name, description, price, photoName }) {
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
             </svg>
           </span>
-          <p class="text">Add to Cart</p>
+          <p className="text">Add to Cart</p>
         </button>
       </Card.Body>
     </Card>
