@@ -19,7 +19,7 @@
 - Integrated with a secure payment gateway (Stripe ).
 
 ### User Interface:
-![Homepage](.screenshots/Home1.png)
+![Homepage](./screenshots/Home1.png)
 ![Homepage2](.screenshots/Home2.png)
 *Homepage showcasing the featured meals.*
 
