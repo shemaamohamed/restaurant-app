@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // Placing a user order
 const placeOrder = async (req, res) => {
     const frontend_url = 'http://localhost:3000';
-    const { userId, items, amount, address } = req.body;
+    const { userId, items, amount, address} = req.body;
 
     try {
         // Creating a new order
@@ -17,7 +17,6 @@ const placeOrder = async (req, res) => {
         // Clearing user's cart after order placement
         await userModel.findByIdAndUpdate(userId, { cartData: {} });
 
-        // Creating Stripe line items
         const line_items = items.map((item) => ({
             price_data: {
                 currency: 'usd',
@@ -41,7 +40,6 @@ const placeOrder = async (req, res) => {
             quantity: 1
         });
 
-        // Creating a Stripe session
         const session = await stripe.checkout.sessions.create({
             line_items,
             mode: 'payment',

@@ -1,32 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { addToOrdered, logOrderedItems } from "../features/OrderSlice"; // Redux actions
-import { clearCart } from "../features/CartSlice"; // Redux action
+import { addToOrdered } from "../features/OrderSlice"; 
+import { clearCart } from "../features/CartSlice"; 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import toast from "react-hot-toast";
 const CheckoutPage = () => {
   const cart = useSelector((state) => state.cart.cart) || {};
   const items = useSelector((state) => state.item.item) || [];
-  const userOrders = useSelector((state) => state.orders.trackedOrdered) || [];
-  const user = useSelector((state) => state.auth.user);
+  const id=localStorage.getItem("id");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const cartItems = Object.values(cart);
-  // Form state to capture input data
-  const [formData, setFormData] = useState({
-    firstName: user?.firstName || "",
-    lastName: user?.lastName || "",
-    streetAddress: "",
-    zipCode: "",
-    city: "",
-    email: user?.email || "",
-    phone: user?.phone || "",
+  const cartItemsid= Object.keys(cart);
+  const itemsFiltered= items.filter((item) =>{
+    return cartItemsid.includes(item._id);
+  })
+  const orders = itemsFiltered.map((item) => {
+    const quantity = cart[item._id] || 0;
+    return {
+      name: item.name,
+      price: item.price,
+      quantity: quantity,
+    };
   });
+  console.log(orders);
+  const totalamountPrice = orders.reduce((acc, item) => acc + item.price * item.quantity, 5);
+  const [formData, setFormData] = useState({
+    Firstname: "",
+    Lastname: "",
+    email: "",
+    street: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+    phone:  "",
+  });
+  
 
-  // Handle form changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -34,92 +47,56 @@ const CheckoutPage = () => {
       [name]: value,
     });
   };
-
-  // Calculate total price utility
-  const calculateTotalPrice = (cart) => {
-    return Object.values(cart).reduce((total, quantity) => total + quantity * cart.price);
-  };
-
-  const totalPrice = calculateTotalPrice(cart);
-
-  // Place Order handler
   const handlePlaceOrder = async (e) => {
     e.preventDefault(); 
 
-    if (!user) {
-      alert("You need to be logged in to place an order.");
-      return;
-    }
 
     if (Object.keys(cart).length === 0) {
       alert("Your cart is empty.");
       return;
     }
     const order = {
-      userId: user.id,
-      items: cartItems.map(item => ({
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-      })), 
-      amount: calculateTotalPrice(cart), 
+      userId: id,
+      items: orders, 
+      amount: totalamountPrice, 
       address: {
-        street: formData.streetAddress,
+        firstName: formData.Firstname,
+        lastName: formData.Lastname,
+        email: formData.email,
+        street: formData.street,
         city: formData.city,
-        zip: formData.zipCode, 
+        state: formData.state,
+        zipCode: formData.zipCode,
+        country:  formData.country,
+        phone:  formData.phone,
+       
       },
+      
     };
+    console.log(JSON.stringify(order));
     try {
-      const response = await axios.post("http://localhost:4000/api/order/place", order, {
+      await axios.post("http://localhost:4000/api/order/place", order, {
         headers: {
-          'Content-Type': 'application/json', 
-          token:token, 
+            "Content-Type": "application/json",
+            "token":token
         },
-      });
-
-      // If order is successful
-      if (response.status === 201) {
-        dispatch(addToOrdered(response.data)); 
+    }).then((res)=>{
+        toast.success("Order placed successfully");
+        dispatch(addToOrdered(res.data)); 
         dispatch(clearCart());
-        alert("Order placed successfully!");
-        navigate("/order-confirmation");
-      } else {
-        alert("Failed to place the order. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error placing order:", error);
-  if (error.response) {
-    // Server responded with a status other than 200 range
-    alert(`Error: ${error.response.data.message || "There was an error placing your order."}`);
-  } else if (error.request) {
-    // The request was made but no response was received
-    alert("Error: No response from server. Please try again.");
-  } else {
-    // Something happened in setting up the request that triggered an error
-    alert("Error: " + error.message);
-  }
+        navigate("/");
+      });
+    }catch (error) {
+      toast.error("Error placing order:");
     }
-  };
-  useEffect(() => {
-    const fetchUserOrders = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/api/order/userorders", {
-          headers: {
-           token:token,
-          },
-        });
-        response.data.orders.forEach((order) => {
-          dispatch(logOrderedItems(order)); 
-        });
-      } catch (error) {
-        console.error("Error fetching user orders:", error);
-      }
-    };
 
-    if (token) {
-      fetchUserOrders();
-    }
-  }, [token, dispatch]);
+
+  };
+
+ 
+  
+    
+
 
   return (
     <Container style={{ marginTop: '50px' }}>
@@ -129,53 +106,75 @@ const CheckoutPage = () => {
           <Form onSubmit={handlePlaceOrder}>
             <Row>
               <Col>
-                <Form.Group controlId="formFirstName" className="mb-3">
+                <Form.Group controlId="formFirstname" className="mb-3">
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter your first name"
+                    placeholder="Enter your First Name"
                     required
-                    name="firstName"
-                    value={formData.firstName}
+                    name="Firstname"
+                    value={formData.Firstname}
                     onChange={handleInputChange}
                   />
                 </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="formLastName" className="mb-3">
+                </Col>
+                <Col>
+                <Form.Group controlId="formLastname" className="mb-3">
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter your last name"
+                    placeholder="Enter your Last Name"
                     required
-                    name="lastName"
-                    value={formData.lastName}
+                    name="Lastname"
+                    value={formData.Lastname}
                     onChange={handleInputChange}
                   />
                 </Form.Group>
               </Col>
             </Row>
-            <Form.Group controlId="formStreetAddress" className="mb-3">
-              <Form.Label>Street Address</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your street address"
-                required
-                name="streetAddress"
-                value={formData.streetAddress}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formFloor" className="mb-3">
-              <Form.Label>zipCode</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your zipCode"
-                name="zipCode"
-                value={formData.zipCode}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+            <Row>
+                <Col>
+                  <Form.Group controlId="formEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter your email"
+                      required
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="formPhone">
+                    <Form.Label>Phone</Form.Label>
+                    <Form.Control
+                      type="tel"
+                      placeholder="Enter your phone number"
+                      required
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+            <Row>
+              <Col md={6}>
+                <Form.Group controlId="formCountry" className="mb-3">
+                  <Form.Label>Country</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter your country"
+                    name="country"
+                    value={formData.country}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+          <Col md={6}>
             <Form.Group controlId="formCity" className="mb-3">
               <Form.Label>City</Form.Label>
               <Form.Control
@@ -187,83 +186,78 @@ const CheckoutPage = () => {
                 onChange={handleInputChange}
               />
             </Form.Group>
-            <Row>
-              <Col>
-                <Form.Group controlId="formEmail">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter your email"
-                    required
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                  />
-                </Form.Group>
+          </Col>
+          <Col md={6}>
+            <Form.Group controlId="formState" className="mb-3">
+              <Form.Label>State</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your state"
+                required
+                name="state"
+                value={formData.state}
+                onChange={handleInputChange}
+
+
+              />
+              </Form.Group>
               </Col>
-              <Col>
-                <Form.Group controlId="formPhone">
-                  <Form.Label>Phone</Form.Label>
-                  <Form.Control
-                    type="tel"
-                    placeholder="Enter your phone number"
-                    required
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Button type="submit" className="place-order-button">
-              Place Order
-            </Button>
-          </Form>
+
+        </Row>
+        <Form.Group controlId="formStreet" className="mb-3">
+          <Form.Label>Street</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter your street address"
+            required
+            name="street"
+            value={formData.street}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="formZipCode" className="mb-3">
+          <Form.Label>Zip Code</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter your zip code"
+            name="zipCode"
+            value={formData.zipCode}
+            onChange={handleInputChange}
+            required
+          />
+        </Form.Group>
+        
+        <Button type="submit" className="place-order-button">
+          Place Order
+        </Button>
+      </Form>
+
         </Col>
+         
        
         <Col md={4} className="order-summary h-100">
           <h3>Order Summary</h3>
           {Object.keys(cart).length > 0 ? (
             <Table borderless responsive>
               <tbody>
-                {Object.entries(cart).map(([itemId, quantity]) => {
-                  const product = items.find((item) => item._id === itemId);
-                  return product ? (
-                    <tr key={itemId}>
-                      <td>{quantity} x {product.name}</td>
-                      <td>{(product.price * quantity).toFixed(2)} EGP</td>
-                    </tr>
-                  ) : null;
-                })}
-              </tbody>
-            </Table>
-          ) : (
-            <p>Empty</p>
-          )}
-          <h6>Total Price: {totalPrice.toFixed(2)} EGP</h6>
-          <h4>User Orders</h4>
-          {userOrders.length > 0 ? (
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Total Price</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userOrders.map((order) => (
-                  <tr key={order.orderId}>
-                    <td>{order.orderId}</td>
-                    <td>{order.totalPrice.toFixed(2)} EGP</td>
-                    <td>{order.status}</td>
+              {orders.map((order, index) => (
+                  <tr key={index}>
+                    <td>{order.quantity} x {order.name}</td>
+                    <td>{(order.price * order.quantity).toFixed(2)} EGP</td>
                   </tr>
                 ))}
               </tbody>
             </Table>
           ) : (
-            <p>No orders yet.</p>
+            <p>Empty</p>
           )}
+          <hr />
+          <div style={{display:'flex' ,flexDirection:"column" ,alignItems:'flex-end' ,justifyContent:'center'}}>
+          <h6 >Subtotal: {((totalamountPrice-5)).toFixed(2)} EGP</h6>
+          <h6>Delivery Price: 5 EGP</h6>
+          <h6>Total Price: {totalamountPrice.toFixed(2)} EGP</h6>
+
+          </div>
         </Col>
       </Row>
     </Container>

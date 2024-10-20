@@ -88,7 +88,7 @@ const OrderList = () => {
                 order.address?.firstName === undefined ||
                 order.address?.lastName === undefined
               )
-          ) // Filter orders based on the name condition
+          ) 
           .map((order) => (
             <Accordion.Item eventKey={order._id} key={order._id}>
               <Accordion.Header onClick={() => handleToggle(order._id)}>

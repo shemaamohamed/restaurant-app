@@ -23,6 +23,7 @@ import { ThemeProvider, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import MenuPage from "./pages/MenuPage.jsx";
 import AdminHomePage from "./Admin/AdminHomePage.jsx";
+import UserorderPage from "./pages/UserorderPage.jsx";
 
 function App() {
   const theme = useTheme();
@@ -59,6 +60,7 @@ function App() {
           <Route path="/signup" element={<SignUpFormPage />} />
           <Route path="/menu" element={<MenuPage/>} />
           <Route path="/wishlist" element={<WishListPage />} />
+          <Route path="/order" element={<UserorderPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="order-confirmed" element={<OrderConfirmedPage />} />
           <Route path="*" element={<PageNotFound />} />

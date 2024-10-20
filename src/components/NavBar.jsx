@@ -63,8 +63,8 @@ function NavBar() {
             <Nav.Link as={NavLink} to="/connect" activeClassName="active">
               Contact
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/about" activeClassName="active">
-              About
+            <Nav.Link as={NavLink} to="/order" activeClassName="active">
+              Orders
             </Nav.Link>
           </Nav>
           <Nav>
