@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.030bab02.css",
+    "main.js": "/static/js/main.c51570ae.js",
+    "static/media/Restaurant.mp4": "/static/media/Restaurant.83b6b1a9f7637b2f75f6.mp4",
+    "static/media/Na_Dec_27.jpg": "/static/media/Na_Dec_27.19e53dddd20b10bd9a58.jpg",
+    "static/media/cart.svg": "/static/media/cart.215a9c3b4ec614af678aef72bd5b746c.svg",
+    "static/media/profile.png": "/static/media/profile.095de2657a3c6d22d251.png",
+    "static/media/icon-food.svg": "/static/media/icon-food.3de71803ae557823be155c811327de61.svg",
+    "static/media/page_not_found.svg": "/static/media/page_not_found.fa605ce095224861c64208e5959ba48f.svg",
+    "static/media/upload.svg": "/static/media/upload.cf3d3eda894bccfa6037b13e7d5b7790.svg",
+    "static/media/contactus.svg": "/static/media/contactus.55e2cd88609643de5ee777a185ec24df.svg",
+    "static/media/empty_cart.svg": "/static/media/empty_cart.94a8e5624d0da1431a4540049c5fe222.svg",
+    "static/media/wishlist.svg": "/static/media/wishlist.904240cec44df5fb2fbcd6dd352417af.svg",
+    "static/media/heart (2).svg": "/static/media/heart (2).350d91a39e424c9ad123e1d77e54204d.svg",
+    "static/media/logo.JPG": "/static/media/logo.ed484f5cd6c914eafb2e.JPG",
+    "static/media/userprofile.svg": "/static/media/userprofile.6312d8a93456e19fa299d911c348835c.svg",
+    "index.html": "/index.html",
+    "main.030bab02.css.map": "/static/css/main.030bab02.css.map",
+    "main.c51570ae.js.map": "/static/js/main.c51570ae.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.030bab02.css",
+    "static/js/main.c51570ae.js"
+  ]
+}
