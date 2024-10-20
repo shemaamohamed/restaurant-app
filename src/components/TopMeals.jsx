@@ -73,16 +73,18 @@ function TopMeals() {
               )
 
                   
-              )}
-                  {!loading && (
-        <Col className="d-flex justify-content-end mt-3">
-          <ShowButton ShowFullMenu={ShowFullMenu}></ShowButton>
-        </Col>)}
+              )
+              }
+                  
            
    
           
       
       </Row>
+      {!loading && (
+        <Col className="d-flex justify-content-end mt-3">
+          <ShowButton ShowFullMenu={ShowFullMenu}></ShowButton>
+        </Col>)}
      
     </Container>
   );

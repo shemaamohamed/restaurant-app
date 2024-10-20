@@ -22,19 +22,17 @@ function Footer() {
           items availability, prices, participation, delivery areas and charges,
           purchase requirements for delivery may vary.
         </div>
-        <Row xs={1} md={4} lg={4} className="list-f">
+        <Row xs={1} md={3} lg={4} className="list-f">
           <Col>
             <Link to="/Menue">Menu🍽️</Link>{" "}
           </Col>
           <Col>
-            <a href="#Privacy">Privacy🔐</a>
+            <Link to="/ordert"> Orders 🧾</Link>
           </Col>
           <Col>
             <Link to="/connect">Contact📞</Link>
           </Col>
-          <Col>
-            <a href="#FAQs">FAQs 🗣</a>
-          </Col>
+          
         
         </Row>
         <div className="p-1 text-black">© 2024 ShimaaMohamed, All rights reserved</div>

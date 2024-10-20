@@ -18,6 +18,41 @@
 ### Payment:
 - Integrated with a secure payment gateway (Stripe ).
 
+### User Interface:
+![Homepage](./screenshots/Home1.png)
+![Homepage2](./screenshots/Home2.png)
+*Homepage showcasing the featured meals.*
+
+![Homepage3](./screenshots/WishList.png)
+*Wishlist page for saving favorite meals.*
+
+![Menu](./screenshots/Menu.png)
+*Menu showcasing the featured meals.*
+
+![Cart](./screenshots/Cart.png)
+*Cart displaying selected meals for checkout.*
+
+![Order Checkout](./screenshots/Placeorder.png)
+*Order checkout page where users place and pay for their orders.*
+
+### Admin Dashboard:
+![Admin Dashboard](./screenshots/remove.png)
+*Admin interface for removing menu items.*
+
+![Admin Dashboard 2](./screenshots/Additem.png)
+*Admin interface for adding new menu items.*
+
+![Admin Dashboard 3](./screenshots/Update.png)
+*Admin interface for updating existing menu items.*
+
+![Admin Dashboard 4](./screenshots/Orders.png)
+*Admin interface for managing customer orders.*
+
+![Admin Dashboard 5](./screenshots/productList.png)
+*Admin interface displaying the list of all products.*
+
+
+
 ## Tech Stack
 ### Frontend:
 - **React.js**
@@ -65,6 +100,16 @@
            cd backend
         ```bash
            node server 
+## Contributing
+If you would like to contribute to the project, feel free to:
+
+1. **Fork the repository**: Create your own copy of the project on GitHub.
+2. **Make your changes**: Implement your features or fix bugs.
+3. **Submit a pull request**: Propose your changes to be merged into the main repository.
+
+
+We appreciate your contributions and support in improving the Yummy Restaurant App!
+
 
        
        
