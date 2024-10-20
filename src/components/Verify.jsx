@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Loader from "./Loader";
 import toast from "react-hot-toast";
+import backendBaseUrl from "../utils/utils";
 
 function Verify() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function Verify() {
   const verifyPament = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/order/verify",
+        `${backendBaseUrl}/api/order/verify`,
         {
           success,
           orderId,

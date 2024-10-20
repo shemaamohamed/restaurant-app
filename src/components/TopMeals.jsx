@@ -12,6 +12,7 @@ import Loader from "./Loader";
 import { useNavigate } from "react-router-dom";
 import ShowButton from "./Buttons/ShowButton";
 import toast from "react-hot-toast";
+import backendBaseUrl from "../utils/utils";
 
 function TopMeals() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function TopMeals() {
   const [loading,setloading]=useState(true)
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/food/list') 
+    axios.get(`${backendBaseUrl}/api/food/list`) 
       .then(response =>{
         dispatch(setItem(response.data.data))
         setloading(false)

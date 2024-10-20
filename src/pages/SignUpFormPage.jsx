@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { signUp } from "../features/AuthSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import backendBaseUrl from "../utils/utils";
 
 function SignUpFormPage() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ function SignUpFormPage() {
     setLoading(true); // Set loading state to true
 
     try {
-      axios.post('http://localhost:4000/api/user/register',user).then((res)=>{
+      axios.post(`${backendBaseUrl}/api/user/register`,user).then((res)=>{
         dispatch(signUp(user));
 
       setTimeout(() => {

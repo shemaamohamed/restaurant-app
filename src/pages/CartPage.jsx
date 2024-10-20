@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import CartEmpty from "../components/CartEmpty";
 import axios from "axios";
 import toast from "react-hot-toast";
+import backendBaseUrl from "../utils/utils";
+
 
 function CartPage() {
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ function CartPage() {
   useEffect(() => {
     if(token){
       const intervalId = setInterval(()=>{
-        axios.get('http://localhost:4000/api/cart/get', {
+        axios.get(`${backendBaseUrl}/api/cart/get`, {
           headers: {
             'token': token,
           },
@@ -52,7 +54,7 @@ function CartPage() {
   
   const incrementQuantity = async (itemId) => {
     const item = { "itemId": itemId };
-    await axios.post('http://localhost:4000/api/cart/add', item, {
+    await axios.post(`${backendBaseUrl}/api/cart/add`, item, {
       headers: {
         'Content-Type': 'application/json',
         'token': token,
@@ -68,7 +70,7 @@ function CartPage() {
   const decrementQuantity = async (itemId) => {
     const item = { "itemId": itemId };
     if (cart[itemId] >= 1) {
-      await axios.delete('http://localhost:4000/api/cart/remove', 
+      await axios.delete(`${backendBaseUrl}/api/cart/remove`, 
         {
           data: item, // Pass item as data
           headers: {
@@ -114,7 +116,7 @@ function CartPage() {
                         <Row >
                           < Col>
                           <img
-                          src={`http://localhost:4000/images/${product.image}`}
+                          src={`${backendBaseUrl}/images/${product.image}`}
                           alt={product.name}
                           style={{ width: "100%"}}
                         />

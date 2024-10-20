@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../features/AuthSlice";
 import toast from "react-hot-toast";
 import axios from "axios";
+import backendBaseUrl from "../utils/utils";
 
 function LoginFormPage() {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ function LoginFormPage() {
     setLoading(true);
     
     try {
-      axios.post('http://localhost:4000/api/user/login',user).then((res)=>{
+      axios.post(`${backendBaseUrl}/api/user/login`,user).then((res)=>{
         dispatch(login(res.data));
         localStorage.setItem("email", user.email);
         toast.success("Successfully logged in!");

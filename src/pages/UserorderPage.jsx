@@ -3,6 +3,8 @@ import { Container, Table } from "react-bootstrap";
 import { addToOrdered } from "../features/OrderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import backendBaseUrl from "../utils/utils";
+
 
 const UserorderPage = () => {
   const id = localStorage.getItem("id");
@@ -15,7 +17,7 @@ const UserorderPage = () => {
       try {
         const response = await axios({
           method: "get",
-          url: "http://localhost:4000/api/order/userorders",
+          url: `${backendBaseUrl}/api/order/userorders`,
           headers: {
             "Content-Type": "application/json",
             token: token,

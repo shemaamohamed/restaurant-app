@@ -6,6 +6,7 @@ import { clearCart } from "../features/CartSlice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import backendBaseUrl from "../utils/utils";
 
 const CheckoutPage = () => {
   const cart = useSelector((state) => state.cart.cart) || {};
@@ -81,7 +82,7 @@ const CheckoutPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/order/place",
+        `${backendBaseUrl}/api/order/place`,
         order,
         {
           headers: {

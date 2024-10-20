@@ -1,6 +1,8 @@
 import Carousel from 'react-bootstrap/Carousel';
 import '../style/Slider.css';
 import {  useSelector } from "react-redux";
+import backendBaseUrl from "../utils/utils";
+
 function Slider() {
   const menuItems = useSelector((state) => state.item.item || []);
   const shuffleArray = (array) => {
@@ -21,7 +23,7 @@ function Slider() {
       {
         randomItems.map((item, index) => (
           <Carousel.Item key={index} interval={1000}>
-            <img  src={`http://localhost:4000/images/${item.image}`} alt={item.name} />
+            <img  src={`${backendBaseUrl}/images/${item.image}`} alt={item.name} />
             <Carousel.Caption>
               <h3>{item.name}</h3>
             </Carousel.Caption>

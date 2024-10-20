@@ -6,13 +6,15 @@ import"../../style/Button.css"
 import { useState } from "react";
 // import { removeItem } from "../../features/ItemSlice";
 import toast from "react-hot-toast";
+import backendBaseUrl from "../../utils/utils";
+
 function DeleteButton({name,id}) {
   // const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
   const handleDelete =async () => {
     try{
-      axios.delete(`http://localhost:4000/api/food/remove`,
+      axios.delete(`${backendBaseUrl}/api/food/remove`,
         {
           data: {
             id: id

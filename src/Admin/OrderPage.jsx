@@ -9,6 +9,8 @@ import {
   Dropdown,
 } from "react-bootstrap";
 // import "../style/OrdersAdmin.css";
+import backendBaseUrl from "../utils/utils";
+
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
@@ -23,7 +25,7 @@ const OrderList = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/order/list"
+          `${backendBaseUrl}/api/order/list`
         );
         setOrders(response.data.data);
       } catch (err) {
@@ -39,7 +41,7 @@ const OrderList = () => {
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
       const response = await axios.put(
-        "http://localhost:4000/api/order/status",
+        `${backendBaseUrl}/api/order/status`,
         {
           orderId: orderId,
           status: newStatus,

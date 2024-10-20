@@ -6,6 +6,7 @@ import UploadImage from "../components/UploadImage";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import backendBaseUrl from "../utils/utils";
 
 function AdditemPage() {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ function AdditemPage() {
       formData.append("category", item.category);
       formData.append("image", item.photoName);
       
-      await axios.post("http://localhost:4000/api/food/add",
+      await axios.post(`${backendBaseUrl}/api/food/add`,
         formData,
         {
           headers: {

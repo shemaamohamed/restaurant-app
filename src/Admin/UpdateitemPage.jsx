@@ -5,7 +5,9 @@ import { Form } from "react-bootstrap"
 
 import axios from "axios"
 import toast from "react-hot-toast"
-import UploadImage from "../components/UploadImage"
+import UploadImage from "../components/UploadImage";
+import backendBaseUrl from "../utils/utils";
+
 
 
 function UpdateitemPage({show,onHide,onConfirm,category,description,price,itemName,id}) {
@@ -54,7 +56,7 @@ function UpdateitemPage({show,onHide,onConfirm,category,description,price,itemNa
       if(item.photoName){
         formData.append("image", item.photoName);
       }
-      await axios.put(`http://localhost:4000/api/food/update`,
+      await axios.put(`${backendBaseUrl}/api/food/update`,
         formData,
         {
           headers: {

@@ -6,6 +6,8 @@ import { removeFromWishlist } from "../features/WishListSlice";
 import toast from "react-hot-toast";
 import "../style/WishList.css";
 import axios from "axios";
+import backendBaseUrl from "../utils/utils";
+
 
 function WishListPage() {
   const wishes = useSelector((state) => state.wishlist.wishes || []);
@@ -21,7 +23,7 @@ function WishListPage() {
     };
     console.log(item)
     console.log(token)
-    await axios.post('http://localhost:4000/api/cart/add',
+    await axios.post(`${backendBaseUrl}/api/cart/add`,
       item,
       {
         headers: {
@@ -61,7 +63,7 @@ function WishListPage() {
                 <td className="text-center align-middle" >
                   <Card.Img
                     style={{ width: "60%", height: "auto"  }}
-                    src={`http://localhost:4000/images/${item.image}`} alt={item.image}
+                    src={`${backendBaseUrl}/images/${item.image}`} alt={item.image}
                   />
                 </td>
                 <td className="text-center align-middle">{item.name}</td>

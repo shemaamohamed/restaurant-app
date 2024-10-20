@@ -6,6 +6,8 @@ import AddButton from "../components/Buttons/AddButton";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../features/ItemSlice";
+import backendBaseUrl from "../utils/utils";
+
 
 
 function ProductListPage() {
@@ -16,7 +18,7 @@ function ProductListPage() {
   const item = useSelector((state) => state.item.item);
   useEffect(()=>{
     const fetchItems= async()=>{
-     await axios.get('http://localhost:4000/api/food/list')
+     await axios.get(`${backendBaseUrl}/api/food/list`)
       .then(response => {
         dispatch(setItem(response.data.data));
         setLoading(false);
@@ -79,7 +81,7 @@ function ProductListPage() {
               <td>{index+1}</td>
               <td>
               <img 
-                  src={`http://localhost:4000/images/${item.image}`}
+                  src={`${backendBaseUrl}/images/${item.image}`}
                   alt={item.name} 
                   width="80" 
                 />
