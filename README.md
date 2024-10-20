@@ -70,6 +70,9 @@ You can access the live version of the project at the following URL:
 - **Node.js** (for backend logic)
 - **Express.js** (for API development)
 - **MongoDB (Mongoose)** (for database operations)
+- **bcrypt**
+- **stripe**
+- **jsonwebtoken**
 
 ### State Management:
 - **Redux Toolkit** (for global state management)
