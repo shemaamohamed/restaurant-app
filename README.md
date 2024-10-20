@@ -16,13 +16,27 @@
 - Full CRUD functionality for menu management.
 
 ### Payment:
-- Integrated with a secure payment gateway (e.g., Stripe or PayPal).
+- Integrated with a secure payment gateway (Stripe ).
 
 ## Tech Stack
-- **Frontend:** React.js, React Bootstrap, Material UI, Axios, HTML5, CSS3, JavaScript (ES6)
-- **Backend:** Node.js, Express.js, MongoDB (Mongoose)
-- **State Management:** Redux Toolkit
-- **Payment Gateway:** (Stripe)
+### Frontend:
+- **React.js**
+- **React Bootstrap** (for UI components)
+- **Material UI** (for enhanced UI)
+- **Axios** (for API calls)
+- **HTML5**, **CSS3**, **JavaScript (ES6)**
+
+### Backend:
+- **Node.js** (for backend logic)
+- **Express.js** (for API development)
+- **MongoDB (Mongoose)** (for database operations)
+
+### State Management:
+- **Redux Toolkit** (for global state management)
+  - **useDispatch**: to dispatch actions to the Redux store.
+  - **useSelector**: to select specific slices of state from the Redux store.
+  - **Slices**: modular state management with slices (e.g., `cartSlice`, `itemSlice`, `orderSlice`).
+
 
 ## Installation
 
@@ -33,5 +47,21 @@
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/shemaamohamed/restaurant-app.git
+   git clone https://github.com/shemaamohamed/restaurant-app.git```
+2. Navigate to the project directory:
+       ```bash
+           cd restaurant-app```
+3. Install the required dependencies:
+       ```bash
+           npm install```
+4. Set up environment variables:
+   Create a .env file in the root directory and add the necessary variables 
+5. Start the development server
+        ```bash
+           cd backend
+           node server
+           ```
+       
+            
+
 
