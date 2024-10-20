@@ -73,6 +73,7 @@ You can access the live version of the project at the following URL:
 - **bcrypt**
 - **stripe**
 - **jsonwebtoken**
+- **multer**
 
 ### State Management:
 - **Redux Toolkit** (for global state management)
